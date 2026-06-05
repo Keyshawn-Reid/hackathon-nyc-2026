@@ -447,6 +447,42 @@ select.ai-filled { border-bottom-color: var(--orange); }
   .fields-grid { grid-template-columns: 1fr; }
   .multi-upload-zone { grid-template-columns: 1fr; }
 }
+
+/* ══ WORK ORDERS DASHBOARD ════════════════════════════════════════════════════ */
+.wo-strip { background: var(--navy); border-bottom: 2px solid var(--blue); padding: 28px 0 32px; }
+.wo-strip-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:20px; gap:16px; }
+.wo-strip-title { font-family:'DM Serif Display',serif; font-size:22px; font-weight:700; color:var(--white); line-height:1.1; }
+.wo-strip-sub { font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.38); margin-top:5px; }
+.wo-refresh-btn { font-family:'IBM Plex Mono',monospace; font-size:9px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.5); background:none; border:1px solid rgba(255,255,255,0.15); padding:7px 14px; cursor:pointer; transition:color 0.15s,border-color 0.15s; white-space:nowrap; flex-shrink:0; }
+.wo-refresh-btn:hover { color:var(--white); border-color:rgba(255,255,255,0.4); }
+.wo-grid { display:grid; gap:10px; }
+.wo-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:16px 18px; transition:border-color 0.15s, background 0.15s; }
+.wo-card:hover { border-color:rgba(0,107,182,0.5); background:rgba(0,107,182,0.08); }
+.wo-card-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:10px; }
+.wo-card-title { font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; color:var(--white); line-height:1.3; }
+.wo-card-meta { font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-top:3px; }
+.wo-priority-badge { font-family:'IBM Plex Mono',monospace; font-size:8px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; padding:3px 8px; flex-shrink:0; }
+.wo-priority-badge.critical { background:rgba(229,62,62,0.2); color:#FC8181; border:1px solid rgba(229,62,62,0.3); }
+.wo-priority-badge.high { background:rgba(245,132,38,0.2); color:var(--orange); border:1px solid rgba(245,132,38,0.3); }
+.wo-priority-badge.medium { background:rgba(0,107,182,0.2); color:#63B3ED; border:1px solid rgba(0,107,182,0.3); }
+.wo-priority-badge.low { background:rgba(107,122,153,0.2); color:rgba(255,255,255,0.4); border:1px solid rgba(107,122,153,0.2); }
+.wo-card-footer { display:flex; align-items:center; justify-content:space-between; }
+.wo-stage { font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.35); }
+.wo-enrich-btn { font-family:'IBM Plex Mono',monospace; font-size:9px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; background:var(--orange); color:var(--white); border:none; padding:7px 14px; cursor:pointer; transition:background 0.15s; }
+.wo-enrich-btn:hover { background:var(--orange-dark); }
+.wo-enrich-btn:disabled { opacity:0.4; cursor:not-allowed; }
+.wo-loading { text-align:center; padding:32px; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.12em; color:rgba(255,255,255,0.3); }
+
+/* ══ AI ENRICHMENT RESULT EXTRAS ═════════════════════════════════════════════ */
+.enrich-block { background: var(--white); border: 1px solid var(--borderl); margin-top: 16px; overflow: hidden; }
+.enrich-block-header { background: var(--navy); padding: 10px 16px; font-family:'IBM Plex Mono',monospace; font-size:9px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(255,255,255,0.7); }
+.enrich-block-body { padding: 14px 16px; }
+.enrich-row { margin-bottom: 10px; }
+.enrich-row:last-child { margin-bottom: 0; }
+.enrich-label { font-family:'IBM Plex Mono',monospace; font-size:8px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted); margin-bottom:3px; }
+.enrich-val { font-size:13px; color:var(--text); line-height:1.5; }
+.enrich-tag { display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:8px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:3px 8px; background:var(--blue-dim); color:var(--blue); border:1px solid rgba(0,107,182,0.2); margin:2px; }
+.wo-source-label { font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid var(--borderl); }
 </style>
 </head>
 <body>
@@ -474,6 +510,22 @@ select.ai-filled { border-bottom-color: var(--orange); }
     <div class="hero-tagline">Student Signal <span class="arr">&rarr;</span> Evidence <span class="arr">&rarr;</span> Action</div>
     <h1 class="hero-headline">Surface the<br><span class="hl">issue.</span> Act now.</h1>
     <p class="hero-sub">Upload signal evidence &mdash; photos, work orders, observation notes &mdash; and AI classifies the issue, assesses severity, and generates a recommended action for your NYC facility team.</p>
+  </div>
+</section>
+
+<!-- LIVE WORK ORDERS DASHBOARD -->
+<section class="wo-strip">
+  <div class="page-wrap">
+    <div class="wo-strip-header">
+      <div>
+        <p class="wo-strip-title">Live Work Orders</p>
+        <p class="wo-strip-sub">CriticalAsset &middot; 90 Trinity Place &middot; Staging</p>
+      </div>
+      <button class="wo-refresh-btn" onclick="loadWorkOrders()">&#8635; Refresh</button>
+    </div>
+    <div class="wo-grid" id="woGrid">
+      <div class="wo-loading">Loading work orders&hellip;</div>
+    </div>
   </div>
 </section>
 
@@ -612,6 +664,62 @@ select.ai-filled { border-bottom-color: var(--orange); }
       <p class="recommended-eyebrow">Recommended Next Step</p>
       <p class="recommended-action" id="recommendedAction"></p>
       <p class="recommended-meta" id="recommendedMeta"></p>
+    </div>
+
+    <!-- AI ENRICHMENT EXTRAS -->
+    <div id="enrichExtras" style="display:none; margin-top:20px;">
+      <div class="enrich-block">
+        <div class="enrich-block-header">AI Intelligence · Compliance &amp; Context</div>
+        <div class="enrich-block-body">
+          <div class="enrich-row">
+            <p class="enrich-label">Root Cause Categories</p>
+            <div id="enrichRootCauses"></div>
+          </div>
+          <div class="enrich-row">
+            <p class="enrich-label">Suggested Assignment Group</p>
+            <p class="enrich-val" id="enrichAssignment"></p>
+          </div>
+          <div class="enrich-row">
+            <p class="enrich-label">Operational Implications</p>
+            <p class="enrich-val" id="enrichImplications"></p>
+          </div>
+          <div class="enrich-row">
+            <p class="enrich-label">Compliance &amp; Regulatory Context</p>
+            <p class="enrich-val" id="enrichCompliance"></p>
+          </div>
+          <div class="enrich-row">
+            <p class="enrich-label">Escalation Path</p>
+            <p class="enrich-val" id="enrichEscalation"></p>
+          </div>
+          <div class="enrich-row">
+            <p class="enrich-label">Closure Verification Question</p>
+            <p class="enrich-val" id="enrichClosure"></p>
+          </div>
+        </div>
+      </div>
+      <div class="enrich-block" id="publicDataBlock" style="display:none;">
+        <div class="enrich-block-header">Public Records · NYC Open Data</div>
+        <div class="enrich-block-body">
+          <div class="enrich-row">
+            <p class="enrich-label">DOB Violations</p>
+            <p class="enrich-val" id="enrichDob"></p>
+          </div>
+          <div class="enrich-row">
+            <p class="enrich-label">311 Complaints</p>
+            <p class="enrich-val" id="enrich311"></p>
+          </div>
+          <div class="enrich-row" id="enrichComplianceNoteRow" style="display:none;">
+            <p class="enrich-label">NYC Code Reference</p>
+            <p class="enrich-val" id="enrichComplianceNote"></p>
+          </div>
+        </div>
+      </div>
+      <div class="enrich-block">
+        <div class="enrich-block-header">CriticalAsset Draft</div>
+        <div class="enrich-block-body">
+          <p class="enrich-val" id="enrichDraft" style="white-space:pre-wrap; line-height:1.6;"></p>
+        </div>
+      </div>
     </div>
 
     <hr class="result-divider">
@@ -923,63 +1031,98 @@ function showLoader() {
 }
 function hideLoader() { clearInterval(_lInt); document.getElementById('analysisLoader').classList.remove('active'); }
 
-function runAnalysis() {
+async function runAnalysis() {
   if (analyzing) return;
-  if (currentType === 'auto' && !evidenceFile) { showToast('Upload a photo or add context first', 'error'); return; }
-  // If still auto after text-only submission, pick a random type
-  if (currentType === 'auto') {
-    const types = Object.keys(ISSUE_TYPES).filter(k => k !== 'auto');
-    setIssueType(types[Math.floor(Math.random() * types.length)]);
-    document.getElementById('issueTypeSelect').value = currentType;
-  }
+  const ctx = document.getElementById('contextInput').value.trim();
+  if (!evidenceFile && !ctx) { showToast('Upload a photo or add context first', 'error'); return; }
   analyzing = true;
   document.getElementById('submitBtn').disabled = true;
   showLoader();
-  setTimeout(() => { hideLoader(); buildResult(); analyzing = false; document.getElementById('submitBtn').disabled = false; }, 2500);
+
+  try {
+    const fd = new FormData();
+    if (evidenceFile) fd.append('image', evidenceFile);
+    fd.append('description', ctx);
+    fd.append('issue_type', currentType === 'auto' ? '' : currentType);
+
+    const resp = await fetch('/api/analyze', { method: 'POST', body: fd });
+    if (!resp.ok) throw new Error('Server error ' + resp.status);
+    const data = await resp.json();
+    hideLoader();
+    buildResult(data);
+  } catch (e) {
+    hideLoader();
+    showToast('Analysis failed — ' + e.message, 'error');
+  }
+
+  analyzing = false;
+  document.getElementById('submitBtn').disabled = false;
 }
 
-function buildResult() {
-  const typeId = currentType;
-  const cfg    = ISSUE_TYPES[typeId];
-  const fields = FIELDS[typeId] || [];
-  const sevEl  = document.getElementById('field-severity');
-  const severity     = sevEl ? sevEl.value : 'medium';
-  const severityTxt  = sevEl ? sevEl.options[sevEl.selectedIndex].text : 'Medium';
-  const woEl   = document.getElementById('field-workorder');
-  const workorder    = woEl ? woEl.value==='1' : false;
-  const locEl  = document.getElementById('field-location');
-  const locTxt       = locEl ? locEl.options[locEl.selectedIndex].text : 'Facility';
-  const assetEl = document.getElementById('field-asset');
-  const assetTxt     = assetEl ? assetEl.options[assetEl.selectedIndex].text : 'Asset';
-  const conf   = CONF_MAP[severity] || CONF_MAP.medium;
+function buildResult(data) {
+  // Map AI issue_type string to our typeId key
+  const typeMap = { 'hvac':'hvac','ventilation':'hvac','plumbing':'plumbing','water':'plumbing','electrical':'electrical','lighting':'electrical','structural':'structural','safety':'structural','pest':'pest','sanitation':'pest','mold':'mold','air quality':'mold','elevator':'elevator','accessibility':'elevator','fire':'fire','sprinkler':'fire' };
+  const issueStr = (data.issue_type||'').toLowerCase();
+  let typeId = 'hvac';
+  for (const [k,v] of Object.entries(typeMap)) { if (issueStr.includes(k)) { typeId=v; break; } }
+  const cfg = ISSUE_TYPES[typeId] || ISSUE_TYPES.hvac;
 
-  currentResult = { typeId, cfg, severity, severityTxt, locTxt, assetTxt, workorder, conf, timestamp: new Date().toLocaleString(), action: ACTIONS[typeId] || 'Escalate to facilities coordinator' };
+  const severity = data.severity || 'medium';
+  const confLabel = data.confidence_label || 'Needs Inspection';
+  const conf = { 'Verified':{text:'Verified',cls:'verified'}, 'Likely':{text:'Likely',cls:'likely'}, 'Inferred':{text:'Inferred',cls:'inferred'}, 'Missing':{text:'Missing',cls:'missing'}, 'Needs Inspection':{text:'Needs Inspection',cls:'inspection'}, 'Conflicting':{text:'Conflicting',cls:'conflicting'} }[confLabel] || CONF_MAP.medium;
+  const asset = data.likely_asset_or_system || cfg.label;
+  const affectedUsers = data.affected_users || 'Building occupants';
 
-  // AI badges
-  fields.forEach(f=>{
-    const b=document.getElementById('badge-'+f.id); if(b) b.classList.add('visible');
-    const s=document.getElementById('field-'+f.id); if(s) s.classList.add('ai-filled');
-  });
+  currentResult = { typeId, cfg, severity, conf, asset, data, timestamp: new Date().toLocaleString() };
 
-  document.getElementById('resultEyebrow').textContent = cfg.label+' \u00b7 '+locTxt+' \u00b7 NYC Facility Intelligence';
+  // Detect AI badge
+  document.getElementById('aiDetectedBadge').style.display = 'inline';
+  document.getElementById('issueTypeSelect').value = typeId;
+  handleIssueTypeChange(typeId);
+
+  document.getElementById('resultEyebrow').textContent = data.issue_type + ' \u00b7 ' + (data.likely_asset_or_system||cfg.label) + ' \u00b7 NYC Facility Intelligence';
 
   // Evidence grid
-  const woDot = workorder?'present':'missing';
-  const woVal = workorder?'Open work order found \u2014 cross-referenced':'No open work order \u2014 new ticket recommended';
+  const missingInfo = (data.missing_information||[]).slice(0,2).join('; ') || 'None identified';
+  const evidenceItems = (data.visible_evidence||[]).slice(0,2);
   document.getElementById('evidenceGrid').innerHTML =
-    '<div class="evidence-item"><div class="evidence-dot '+woDot+'"></div><div><p class="evidence-item-label">Existing Work Order</p><p class="evidence-item-val">'+woVal+'</p></div></div>'+
-    '<div class="evidence-item"><div class="evidence-dot '+(evidenceFile?'present':'missing')+'"></div><div><p class="evidence-item-label">Photo Evidence</p><p class="evidence-item-val">'+(evidenceFile?'Uploaded and analyzed':'Not provided')+'</p></div></div>'+
-    '<div class="evidence-item"><div class="evidence-dot present"></div><div><p class="evidence-item-label">Student Observation</p><p class="evidence-item-val">Signal submitted via ProjectNYC</p></div></div>'+
-    '<div class="evidence-item"><div class="evidence-dot inspect"></div><div><p class="evidence-item-label">On-Site Inspection</p><p class="evidence-item-val">On-site verification recommended</p></div></div>';
+    '<div class="evidence-item"><div class="evidence-dot '+(evidenceFile?'present':'missing')+'"></div><div><p class="evidence-item-label">Photo Evidence</p><p class="evidence-item-val">'+(evidenceFile?'Uploaded and analyzed by GPT-4o':'Text-only \u2014 photo recommended')+'</p></div></div>'+
+    '<div class="evidence-item"><div class="evidence-dot present"></div><div><p class="evidence-item-label">Field Signal</p><p class="evidence-item-val">'+(evidenceItems.length?evidenceItems.join('; '):'Observation submitted')+'</p></div></div>'+
+    '<div class="evidence-item"><div class="evidence-dot '+(data.missing_information&&data.missing_information.length?'inspect':'present')+'"></div><div><p class="evidence-item-label">Missing Evidence</p><p class="evidence-item-val">'+missingInfo+'</p></div></div>'+
+    '<div class="evidence-item"><div class="evidence-dot inspect"></div><div><p class="evidence-item-label">Affected Users</p><p class="evidence-item-val">'+affectedUsers+'</p></div></div>';
 
   // Action cards
   const sc = severity==='high'?'high':severity==='low'?'low':'medium';
   document.getElementById('actionGrid').innerHTML =
-    '<div class="action-card"><p class="action-card-label">AI Confidence</p><p class="action-card-value">'+conf.text+'</p><p class="action-card-meta">'+(evidenceFile?'Photo evidence analyzed':'Text context only')+'</p></div>'+
-    '<div class="action-card orange"><p class="action-card-label">Severity Assessment</p><p class="action-card-value">'+assetTxt+'</p><span class="severity-badge '+sc+'">'+severityTxt.split(' \u2014 ')[0]+'</span><p class="action-card-meta">'+locTxt+' \u00b7 '+cfg.label+'</p></div>';
+    '<div class="action-card"><p class="action-card-label">AI Confidence</p><p class="action-card-value">'+conf.text+'</p><p class="action-card-meta">'+(evidenceFile?'Photo evidence analyzed':'Text analysis')+'</p></div>'+
+    '<div class="action-card orange"><p class="action-card-label">Severity &middot; Asset</p><p class="action-card-value">'+asset+'</p><span class="severity-badge '+sc+'">'+severity.charAt(0).toUpperCase()+severity.slice(1)+'</span><p class="action-card-meta">'+data.issue_type+' &middot; Signal Intelligence</p></div>';
 
-  document.getElementById('recommendedAction').textContent = currentResult.action;
-  document.getElementById('recommendedMeta').textContent   = cfg.label+' \u00b7 '+locTxt+' \u00b7 Signal Intelligence v1.2';
+  document.getElementById('recommendedAction').textContent = data.recommended_action || cfg.label+' \u2014 escalate to facilities coordinator';
+  document.getElementById('recommendedMeta').textContent = data.issue_type + ' \u00b7 ' + (data.suggested_assignment_group||cfg.label) + ' \u00b7 Signal Intelligence v2';
+
+  // Enrichment extras panel
+  if (data.root_cause_categories||data.compliance_context||data.operational_implications) {
+    document.getElementById('enrichRootCauses').innerHTML = (data.root_cause_categories||[]).map(r=>'<span class="enrich-tag">'+r+'</span>').join('') || '<span style="color:var(--muted);font-size:13px">Not identified</span>';
+    document.getElementById('enrichAssignment').textContent = data.suggested_assignment_group || '\u2014';
+    document.getElementById('enrichImplications').textContent = data.operational_implications || '\u2014';
+    document.getElementById('enrichCompliance').textContent = data.compliance_context || '\u2014';
+    document.getElementById('enrichEscalation').textContent = data.escalation_path || '\u2014';
+    document.getElementById('enrichClosure').textContent = data.closure_verification || '\u2014';
+    document.getElementById('enrichDraft').textContent = data.criticalasset_update_draft || '\u2014';
+    document.getElementById('enrichExtras').style.display = 'block';
+  }
+
+  // Public data panel
+  const pd = data.public_data;
+  if (pd) {
+    document.getElementById('enrichDob').textContent = pd.violation_summary || '\u2014';
+    document.getElementById('enrich311').textContent = pd.complaint_summary || '\u2014';
+    if (pd.compliance_note) {
+      document.getElementById('enrichComplianceNote').textContent = pd.compliance_note;
+      document.getElementById('enrichComplianceNoteRow').style.display = 'block';
+    }
+    document.getElementById('publicDataBlock').style.display = 'block';
+  }
 
   const saveBtn = document.getElementById('saveBtn');
   saveBtn.textContent='Save Signal'; saveBtn.disabled=false;
@@ -994,7 +1137,9 @@ function queueUpdate()       { showToast('Queue update submitted \u2014 ticket #
 function markInspection()    { showToast('Marked for inspection \u00b7 Assigned to building engineer'); }
 function draftCriticalAsset() {
   if (!currentResult) return;
-  const d='CRITICALASSET UPDATE DRAFT\nIssue Type:  '+currentResult.cfg.label+'\nLocation:    '+currentResult.locTxt+'\nAsset:       '+currentResult.assetTxt+'\nSeverity:    '+currentResult.severityTxt+'\nConfidence:  '+currentResult.conf.text+'\nAction:      '+currentResult.action+'\nSubmitted:   '+currentResult.timestamp+'\nSource:      ProjectNYC Signal Intelligence v1.2';
+  const d = currentResult.data && currentResult.data.criticalasset_update_draft
+    ? currentResult.data.criticalasset_update_draft
+    : 'CRITICALASSET UPDATE DRAFT\nIssue Type:  '+currentResult.cfg.label+'\nSeverity:    '+currentResult.severity+'\nConfidence:  '+currentResult.conf.text+'\nSubmitted:   '+currentResult.timestamp+'\nSource:      ProjectNYC Signal Intelligence v2';
   navigator.clipboard.writeText(d).then(()=>showToast('CriticalAsset draft copied to clipboard')).catch(()=>showToast('Draft ready \u2014 clipboard unavailable','error'));
 }
 
@@ -1032,6 +1177,8 @@ function resetAll() {
   document.getElementById('sessionNameInput').value = '';
   lockAnalysis();
   document.getElementById('resultSection').style.display = 'none';
+  document.getElementById('enrichExtras').style.display = 'none';
+  document.getElementById('publicDataBlock').style.display = 'none';
   updateSignalStatus();
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
@@ -1055,8 +1202,70 @@ document.querySelectorAll('a.nav-pill[href^="#"]').forEach(a=>{
   });
 });
 
+/* ══ WORK ORDERS ═══════════════════════════════════════════════════════════ */
+async function loadWorkOrders() {
+  const grid = document.getElementById('woGrid');
+  grid.innerHTML = '<div class="wo-loading">Loading work orders&hellip;</div>';
+  try {
+    const resp = await fetch('/api/workorders');
+    if (!resp.ok) throw new Error('Status ' + resp.status);
+    const data = await resp.json();
+    const nodes = data.nodes || [];
+    if (!nodes.length) { grid.innerHTML = '<div class="wo-loading">No work orders found.</div>'; return; }
+    grid.innerHTML = nodes.map(wo => {
+      const p = (wo.executionPriority||'medium').toLowerCase();
+      const stage = (wo.workOrderStage||{}).name || 'Unknown';
+      const loc = (wo.location||{}).locationName || '90 Trinity Place';
+      const safeWo = encodeURIComponent(JSON.stringify(wo));
+      return `<div class="wo-card">
+        <div class="wo-card-top">
+          <div>
+            <p class="wo-card-title">${wo.title||'Untitled'}</p>
+            <p class="wo-card-meta">${loc} &middot; Stage: ${stage}</p>
+          </div>
+          <span class="wo-priority-badge ${p}">${p.charAt(0).toUpperCase()+p.slice(1)}</span>
+        </div>
+        <div class="wo-card-footer">
+          <span class="wo-stage">${wo.description ? wo.description.slice(0,60)+'…' : 'No description — enrichment recommended'}</span>
+          <button class="wo-enrich-btn" onclick="enrichWorkOrder(decodeURIComponent('${safeWo}'), this)">Enrich with AI &rarr;</button>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    grid.innerHTML = '<div class="wo-loading" style="color:#FC8181;">Failed to load: '+e.message+'</div>';
+  }
+}
+
+async function enrichWorkOrder(woStr, btn) {
+  let wo;
+  try { wo = JSON.parse(woStr); } catch(e) { showToast('Parse error','error'); return; }
+  if (btn) { btn.disabled=true; btn.textContent='Enriching…'; }
+
+  try {
+    const resp = await fetch('/api/enrich-workorder', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: woStr
+    });
+    if (!resp.ok) throw new Error('Status ' + resp.status);
+    const data = await resp.json();
+    // Show in result panel (reuse signal result section)
+    evidenceFile = null;
+    document.getElementById('resultSection').style.display = 'none';
+    document.getElementById('enrichExtras').style.display = 'none';
+    document.getElementById('publicDataBlock').style.display = 'none';
+    document.getElementById('resultEyebrow').textContent = 'Work Order Enrichment · ' + wo.title;
+    buildResult(data);
+    showToast('Work order enriched with AI');
+  } catch(e) {
+    showToast('Enrichment failed: ' + e.message, 'error');
+    if (btn) { btn.disabled=false; btn.textContent='Enrich with AI →'; }
+  }
+}
+
 /* ══ INIT ══════════════════════════════════════════════════════════════════ */
 renderHistory();
+loadWorkOrders();
 </script>
 </body>
 </html>
