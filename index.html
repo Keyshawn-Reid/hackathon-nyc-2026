@@ -487,6 +487,60 @@ select.ai-filled { border-bottom-color: var(--orange); }
 .poc-btn.warn:hover { background: rgba(245,132,38,0.08); }
 @media (max-width: 640px) { .poc-grid { grid-template-columns: 1fr; } .poc-cell { border-right: none; border-bottom: 1px solid var(--borderl); } }
 
+/* ══ EDITABLE HISTORY ════════════════════════════════════════════════════════ */
+.history-item { cursor:pointer; transition:background 0.15s; }
+.history-item:hover { background: var(--blue-dim); }
+.history-item-expand { display:none; padding: 14px 16px 16px; border-top: 1px solid var(--borderl); background: #fafbfc; }
+.history-item.open .history-item-expand { display:block; }
+.hi-status-row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px; }
+.hi-status-label { font-family:'IBM Plex Mono',monospace; font-size:8px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted); }
+.hi-status-select,.hi-priority-select { font-family:'IBM Plex Mono',monospace; font-size:9px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; border:1px solid var(--border); background:var(--white); color:var(--text); padding:5px 10px; cursor:pointer; outline:none; }
+.hi-notes-area { width:100%; font-family:'IBM Plex Mono',monospace; font-size:10px; line-height:1.6; color:var(--text); background:var(--white); border:1px solid var(--borderl); padding:8px 10px; resize:vertical; min-height:60px; outline:none; margin-bottom:8px; transition:border-color 0.15s; }
+.hi-notes-area:focus { border-color:var(--blue); }
+.hi-action-row { display:flex; gap:8px; flex-wrap:wrap; }
+.hi-btn { font-family:'IBM Plex Mono',monospace; font-size:8px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; padding:6px 12px; border:none; cursor:pointer; transition:background 0.15s; }
+.hi-btn.save  { background:var(--blue); color:var(--white); }
+.hi-btn.save:hover { background:var(--blue-dark); }
+.hi-btn.resolve { background:var(--green); color:var(--white); }
+.hi-btn.resolve:hover { background:#0b8a5c; }
+.hi-status-badge { display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:8px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; padding:3px 8px; }
+.hi-status-badge.new        { background:rgba(0,107,182,0.1);  color:var(--blue);   border:1px solid rgba(0,107,182,0.2); }
+.hi-status-badge.review     { background:rgba(124,58,237,0.1); color:var(--purple); border:1px solid rgba(124,58,237,0.2); }
+.hi-status-badge.inspection { background:rgba(245,132,38,0.12);color:var(--orange); border:1px solid rgba(245,132,38,0.25); }
+.hi-status-badge.progress   { background:rgba(0,107,182,0.15); color:var(--blue-dark); border:1px solid rgba(0,107,182,0.25); }
+.hi-status-badge.escalated  { background:rgba(229,62,62,0.1);  color:var(--red);    border:1px solid rgba(229,62,62,0.2); }
+.hi-status-badge.resolved   { background:rgba(13,158,106,0.1); color:var(--green);  border:1px solid rgba(13,158,106,0.2); }
+
+/* ══ TIMELINE ═══════════════════════════════════════════════════════════════ */
+.tl-section { margin-top:28px; border:1px solid var(--borderl); background:var(--white); overflow:hidden; }
+.tl-header-bar { background:var(--navy); padding:12px 20px; display:flex; align-items:center; justify-content:space-between; }
+.tl-header-title { font-family:'DM Serif Display',serif; font-size:16px; font-weight:700; color:var(--white); }
+.tl-header-sub { font-family:'IBM Plex Mono',monospace; font-size:8px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(255,255,255,0.35); }
+.tl-body { padding:20px 20px 8px; position:relative; }
+.tl-body::before { content:''; position:absolute; left:32px; top:24px; bottom:12px; width:2px; background:var(--borderl); }
+.tl-event { display:flex; align-items:flex-start; gap:14px; margin-bottom:18px; position:relative; }
+.tl-dot-wrap { flex-shrink:0; width:24px; display:flex; align-items:center; justify-content:center; padding-top:3px; }
+.tl-dot { width:10px; height:10px; border-radius:50%; border:2px solid var(--blue); background:var(--white); flex-shrink:0; }
+.tl-dot.filled { background:var(--blue); }
+.tl-dot.orange { border-color:var(--orange); background:var(--orange); }
+.tl-dot.green  { border-color:var(--green);  background:var(--green);  }
+.tl-dot.red    { border-color:var(--red);    background:var(--red);    }
+.tl-content { flex:1; }
+.tl-time { font-family:'IBM Plex Mono',monospace; font-size:8px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:2px; }
+.tl-title { font-size:13px; font-weight:600; color:var(--text); line-height:1.3; }
+.tl-desc  { font-size:12px; color:var(--muted); line-height:1.5; margin-top:1px; }
+.tl-actions { padding:12px 20px 16px; display:flex; gap:10px; flex-wrap:wrap; border-top:1px solid var(--borderl); }
+.tl-note-row { padding:0 20px 14px; display:none; }
+.tl-note-row.visible { display:flex; gap:8px; align-items:flex-start; }
+.tl-note-input { flex:1; font-family:'IBM Plex Mono',monospace; font-size:10px; line-height:1.5; border:1px solid var(--borderl); background:var(--card); padding:8px 10px; outline:none; resize:none; min-height:48px; transition:border-color 0.15s; }
+.tl-note-input:focus { border-color:var(--blue); }
+.tl-btn { font-family:'IBM Plex Mono',monospace; font-size:9px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; padding:8px 14px; border:none; cursor:pointer; transition:background 0.15s; }
+.tl-btn.primary { background:var(--blue); color:var(--white); }
+.tl-btn.primary:hover { background:var(--blue-dark); }
+.tl-btn.ghost { background:none; color:var(--blue); border:1px solid var(--blue); }
+.tl-btn.ghost:hover { background:var(--blue-dim); }
+.tl-btn.green { background:var(--green); color:var(--white); }
+.tl-btn.green:hover { background:#0b8a5c; }
 /* ══ WORK ORDERS DASHBOARD ════════════════════════════════════════════════════ */
 .wo-strip { background: var(--navy); border-bottom: 2px solid var(--blue); padding: 28px 0 32px; }
 .wo-strip-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:20px; gap:16px; }
@@ -809,6 +863,26 @@ select.ai-filled { border-bottom-color: var(--orange); }
           <button class="poc-btn primary" onclick="pocQueueForReview()">Queue for Review</button>
           <button class="poc-btn ghost"   onclick="pocCopyDraft()">Copy Draft</button>
           <button class="poc-btn warn"    onclick="pocScheduleFollowUp()">Schedule Follow-Up</button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- TIMELINE -->
+    <div id="timelineSection" style="display:none;">
+      <div class="tl-section">
+        <div class="tl-header-bar">
+          <span class="tl-header-title">Issue Updates</span>
+          <span class="tl-header-sub">Lifecycle &middot; This Session</span>
+        </div>
+        <div class="tl-body" id="tlBody"></div>
+        <div class="tl-note-row" id="tlNoteRow">
+          <textarea class="tl-note-input" id="tlNoteInput" placeholder="Add reviewer comment&hellip;" rows="2"></textarea>
+          <button class="tl-btn primary" onclick="tlSubmitNote()">Add</button>
+        </div>
+        <div class="tl-actions">
+          <button class="tl-btn green"  onclick="tlMarkResolved()">Mark Resolved</button>
+          <button class="tl-btn ghost"  onclick="tlToggleNote()">Add Note</button>
         </div>
       </div>
     </div>
@@ -1221,6 +1295,14 @@ function buildResult(data) {
   document.getElementById('resultSection').style.display='block';
   document.getElementById('submitAnotherCta').style.display='none';
   buildPointOfContact(data);
+  // seed timeline
+  timelineEvents = [];
+  document.getElementById('timelineSection').style.display = 'none';
+  const _issueLabel = (data.issue_type||'Facility Issue');
+  const _teamLabel  = document.getElementById('pocTeam') ? document.getElementById('pocTeam').textContent : 'Facilities';
+  addTimelineEvent('Student Signal Received', (evidenceFile ? 'Photo uploaded and analyzed.' : 'Field observation submitted.'), 'filled');
+  addTimelineEvent('AI Analysis Completed', 'Issue classified as '+_issueLabel+'.', 'filled');
+  addTimelineEvent('Point of Contact Assigned', _teamLabel+'.', 'orange');
   setTimeout(()=>document.getElementById('resultSection').scrollIntoView({behavior:'smooth',block:'nearest'}),150);
 }
 
@@ -1314,6 +1396,7 @@ function pocQueueForReview() {
   renderHistory();
   document.getElementById('pocReviewStatus').textContent = 'Queued for human review — item added to Signal History';
   showToast('Queued for human review.');
+  addTimelineEvent('Review Requested', 'Report queued for human review.', 'orange');
 }
 
 function pocCopyDraft() {
@@ -1324,7 +1407,107 @@ function pocCopyDraft() {
     .catch(()  => showToast('Copy unavailable — select draft text manually','error'));
 }
 
-function pocScheduleFollowUp() { showToast('Follow-up reminder scheduled.'); }
+function pocScheduleFollowUp() { showToast('Follow-up reminder scheduled.'); addTimelineEvent('Follow-Up Scheduled', 'Reminder scheduled for this issue.', 'orange'); }
+
+
+/* ══ TIMELINE ══════════════════════════════════════════════════════════════ */
+let timelineEvents = [];
+
+function addTimelineEvent(title, desc, dotStyle) {
+  const now = new Date();
+  const t = now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true});
+  timelineEvents.push({ time:t, title, desc, dot: dotStyle||'filled' });
+  renderTimeline();
+  const sec = document.getElementById('timelineSection');
+  if (sec) sec.style.display = 'block';
+}
+
+function renderTimeline() {
+  const body = document.getElementById('tlBody');
+  if (!body) return;
+  if (!timelineEvents.length) { body.innerHTML = ''; return; }
+  body.innerHTML = timelineEvents.map(e =>
+    `<div class="tl-event">
+      <div class="tl-dot-wrap"><div class="tl-dot ${e.dot}"></div></div>
+      <div class="tl-content">
+        <p class="tl-time">${e.time}</p>
+        <p class="tl-title">${e.title}</p>
+        <p class="tl-desc">${e.desc}</p>
+      </div>
+    </div>`
+  ).join('');
+}
+
+function tlMarkResolved() {
+  addTimelineEvent('Issue Resolved', 'Marked resolved by reviewer.', 'green');
+  showToast('Issue marked resolved.');
+}
+
+function tlToggleNote() {
+  const row = document.getElementById('tlNoteRow');
+  const visible = row.classList.toggle('visible');
+  if (visible) document.getElementById('tlNoteInput').focus();
+}
+
+function tlSubmitNote() {
+  const inp = document.getElementById('tlNoteInput');
+  const txt = (inp.value||'').trim();
+  if (!txt) { showToast('Enter a note first','error'); return; }
+  addTimelineEvent('Reviewer Comment Added', txt.length > 80 ? txt.slice(0,80)+'…' : txt, 'orange');
+  inp.value = '';
+  document.getElementById('tlNoteRow').classList.remove('visible');
+  showToast('Note added to timeline.');
+}
+
+/* ══ EDITABLE HISTORY ══════════════════════════════════════════════════════ */
+const HI_STATUSES = ['New','Under Review','Needs Inspection','In Progress','Escalated','Resolved'];
+const HI_STATUS_CLS = { 'New':'new','Under Review':'review','Needs Inspection':'inspection','In Progress':'progress','Escalated':'escalated','Resolved':'resolved' };
+
+function toggleHistoryItem(id) {
+  const el = document.getElementById('hi-'+id);
+  if (el) el.classList.toggle('open');
+}
+
+function setHistoryStatus(id, val) {
+  const e = history.find(h=>h.id===id);
+  if (!e) return;
+  e.status = val;
+  _saveHistory();
+  const badge = document.getElementById('hi-status-badge-'+id);
+  if (badge) { badge.textContent = val; badge.className = 'hi-status-badge '+(HI_STATUS_CLS[val]||'new'); }
+}
+
+function setHistoryPriority(id, val) {
+  const e = history.find(h=>h.id===id);
+  if (e) { e.priority = val; _saveHistory(); }
+}
+
+function addHistoryNote(id) {
+  const inp = document.getElementById('hi-note-input-'+id);
+  const note = (inp ? inp.value : '').trim();
+  if (!note) { showToast('Enter a note first','error'); return; }
+  const e = history.find(h=>h.id===id);
+  if (!e) return;
+  if (!e.notes) e.notes = [];
+  e.notes.push({ ts: new Date().toLocaleString(), text: note });
+  _saveHistory();
+  inp.value = '';
+  showToast('Note saved.');
+  renderHistory();
+  // Re-open the item
+  setTimeout(()=>{ const el=document.getElementById('hi-'+id); if(el) el.classList.add('open'); },50);
+}
+
+function markHistoryResolved(id) {
+  setHistoryStatus(id, 'Resolved');
+  renderHistory();
+  setTimeout(()=>{ const el=document.getElementById('hi-'+id); if(el) el.classList.add('open'); },50);
+  showToast('Marked resolved.');
+}
+
+function _saveHistory() {
+  try { localStorage.setItem('pnyc_history', JSON.stringify(history)); } catch(e){}
+}
 
 /* ══ EVIDENCE BUTTONS ══════════════════════════════════════════════════════ */
 function queueUpdate()       { showToast('Queue update submitted \u2014 ticket #'+Math.floor(Math.random()*90000+10000)); }
@@ -1341,7 +1524,7 @@ function draftCriticalAsset() {
 function saveToHistory() {
   if (!currentResult) { showToast('Run analysis first','error'); return; }
   const name = document.getElementById('sessionNameInput').value.trim() || currentResult.cfg.label+' \u2014 '+currentResult.locTxt;
-  const entry = { id:Date.now(), name, typeLabel:currentResult.cfg.label, loc:currentResult.locTxt, asset:currentResult.assetTxt, severity:currentResult.severity, conf:currentResult.conf, action:currentResult.action, ts:currentResult.timestamp };
+  const entry = { id:Date.now(), name, typeLabel:(currentResult.data&&currentResult.data.issue_type)||currentResult.cfg.label, loc:(currentResult.data&&currentResult.data.likely_asset_or_system)||currentResult.locTxt||'—', asset:(currentResult.data&&currentResult.data.suggested_assignment_group)||currentResult.asset||'—', severity:currentResult.severity, conf:currentResult.conf, action:(currentResult.data&&currentResult.data.recommended_action)||currentResult.action||'—', ts:currentResult.timestamp, status:'New', priority:'', notes:[] };
   history.unshift(entry);
   try { localStorage.setItem('pnyc_history', JSON.stringify(history)); } catch(e){}
   renderHistory();
@@ -1360,7 +1543,42 @@ function renderHistory() {
     c.innerHTML='<div class="history-empty"><div class="history-empty-icon">&#x1F4CB;</div><p class="history-empty-text">No signals saved yet &middot; Run an analysis and save it above</p></div>';
     return;
   }
-  c.innerHTML='<div class="history-list">'+history.map(e=>'<div class="history-item severity-'+e.severity+'" id="hi-'+e.id+'"><div class="history-item-main"><p class="history-item-type">'+e.name+'</p><p class="history-item-meta">'+e.typeLabel+' &middot; '+e.loc+' &middot; '+e.asset+' &middot; '+e.ts+'</p></div><div class="history-item-right"><span class="history-conf-badge conf-badge '+e.conf.cls+'">'+e.conf.text+'</span><button class="history-del-btn" onclick="deleteHistoryItem('+e.id+')">&#x2715;</button></div></div>').join('')+'</div>';
+  const items = history.map(e => {
+    const st    = e.status || 'New';
+    const stCls = HI_STATUS_CLS[st] || 'new';
+    const pr    = e.priority || '';
+    const notes = (e.notes||[]).map(n=>`<p style="font-size:11px;color:var(--muted);margin:2px 0;"><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--blue)">${n.ts}</span><br>${n.text}</p>`).join('');
+    const statusOpts = ['New','Under Review','Needs Inspection','In Progress','Escalated','Resolved']
+      .map(s=>`<option value="${s}"${s===st?' selected':''}>${s}</option>`).join('');
+    const priorOpts = ['','Low','Medium','High','Critical']
+      .map(v=>`<option value="${v}"${v===pr?' selected':''}>${v||'— Override —'}</option>`).join('');
+    return `<div class="history-item severity-${e.severity}" id="hi-${e.id}" onclick="toggleHistoryItem(${e.id})">
+      <div class="history-item-main">
+        <p class="history-item-type">${e.name}</p>
+        <p class="history-item-meta">${e.typeLabel} &middot; ${e.loc} &middot; ${e.ts}</p>
+      </div>
+      <div class="history-item-right">
+        <span class="hi-status-badge ${stCls}" id="hi-status-badge-${e.id}">${st}</span>
+        <span class="history-conf-badge conf-badge ${(e.conf||{}).cls||'inspection'}">${(e.conf||{}).text||'—'}</span>
+        <button class="history-del-btn" onclick="event.stopPropagation();deleteHistoryItem(${e.id})">&#x2715;</button>
+      </div>
+      <div class="history-item-expand" onclick="event.stopPropagation()">
+        <div class="hi-status-row">
+          <span class="hi-status-label">Status</span>
+          <select class="hi-status-select" onchange="setHistoryStatus(${e.id},this.value)">${statusOpts}</select>
+          <span class="hi-status-label" style="margin-left:8px">Priority Override</span>
+          <select class="hi-priority-select" onchange="setHistoryPriority(${e.id},this.value)">${priorOpts}</select>
+        </div>
+        ${notes ? `<div style="margin-bottom:8px;border-left:2px solid var(--borderl);padding-left:10px">${notes}</div>` : ''}
+        <textarea class="hi-notes-area" id="hi-note-input-${e.id}" placeholder="Add reviewer note&hellip;"></textarea>
+        <div class="hi-action-row">
+          <button class="hi-btn save"    onclick="addHistoryNote(${e.id})">Save Note</button>
+          <button class="hi-btn resolve" onclick="markHistoryResolved(${e.id})">Mark Resolved</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  c.innerHTML = '<div class="history-list">'+items+'</div>';
 }
 
 /* ══ RESET ═════════════════════════════════════════════════════════════════ */
@@ -1374,6 +1592,8 @@ function resetAll() {
   document.getElementById('enrichExtras').style.display = 'none';
   document.getElementById('publicDataBlock').style.display = 'none';
   document.getElementById('pocSection').style.display = 'none';
+  document.getElementById('timelineSection').style.display = 'none';
+  timelineEvents = [];
   updateSignalStatus();
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
@@ -1450,6 +1670,8 @@ async function enrichWorkOrder(woStr, btn) {
     document.getElementById('enrichExtras').style.display = 'none';
     document.getElementById('publicDataBlock').style.display = 'none';
     document.getElementById('pocSection').style.display = 'none';
+    document.getElementById('timelineSection').style.display = 'none';
+    timelineEvents = [];
     document.getElementById('resultEyebrow').textContent = 'Work Order Enrichment · ' + wo.title;
     buildResult(data);
     showToast('Work order enriched with AI');
