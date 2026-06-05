@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: projectnyc
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    envVars:
+      - key: CA_API_URL
+        value: https://90trinity.stg.criticalasset.com/api
+      - key: CA_SCOPES
+        value: workorders.read assets.read locations.read
+      - key: CA_CLIENT_ID
+        sync: false
+      - key: CA_CLIENT_SECRET
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false

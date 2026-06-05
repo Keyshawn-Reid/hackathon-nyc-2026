@@ -12,12 +12,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-app = Flask(__name__, static_folder=".")
+app = Flask(__name__)
 
 
 @app.route("/")
 def index():
-    return send_from_directory(".", "index.html")
+    return send_from_directory(app.root_path, "index.html")
 
 
 @app.route("/api/workorders")
@@ -78,5 +78,6 @@ def api_enrich_workorder():
 
 
 if __name__ == "__main__":
-    port = int(os.getenv("PORT", 5000))
-    app.run(debug=True, port=port)
+    port = int(os.getenv("PORT", 5001))
+    debug = os.getenv("FLASK_DEBUG", "").lower() in ("1", "true")
+    app.run(host="0.0.0.0", port=port, debug=debug)
