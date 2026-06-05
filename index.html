@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProjectNYC — Student Signal Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ══ RESET ══════════════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', 'Helvetica Neue', sans-serif; background: #f8f9fb; color: #0B1020; min-height: 100vh; }
+
+/* ══ TOKENS ═════════════════════════════════════════════════════════════════ */
+:root {
+  --blue:        #006BB6;
+  --blue-dark:   #005494;
+  --blue-deep:   #003d6e;
+  --orange:      #F58426;
+  --orange-dark: #C96A0F;
+  --navy:        #0B1020;
+  --navy-80:     rgba(11,16,32,0.80);
+  --white:       #FFFFFF;
+  --card:        #F4F6F8;
+  --text:        #0B1020;
+  --muted:       #6B7A99;
+  --border:      #CBD5E0;
+  --borderl:     #E2E8F0;
+  --blue-dim:    rgba(0,107,182,0.07);
+  --green:       #0D9E6A;
+  --purple:      #7C3AED;
+  --red:         #E53E3E;
+  --hh:          60px;
+}
+
+/* ══ HEADER ══════════════════════════════════════════════════════════════════ */
+.site-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--hh); background: var(--navy);
+  border-bottom: 2px solid var(--blue);
+  display: flex; align-items: center; justify-content: space-between; padding: 0 2rem;
+}
+.header-logo { font-family: 'DM Serif Display', serif; font-size: 20px; font-weight: 700; color: var(--white); letter-spacing: -0.01em; }
+.header-logo span { color: var(--orange); }
+.header-tag {
+  font-family: 'IBM Plex Mono', monospace; font-size: 8px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.38);
+  border-left: 1px solid rgba(255,255,255,0.12); padding-left: 12px; margin-left: 12px;
+}
+.header-brand { display: flex; align-items: center; }
+.header-nav { display: flex; align-items: center; gap: 6px; }
+.nav-pill {
+  font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.5); padding: 6px 14px;
+  border: 1px solid rgba(255,255,255,0.1); background: none; cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s; text-decoration: none;
+}
+.nav-pill:hover, .nav-pill.active { color: var(--white); border-color: var(--blue); background: rgba(0,107,182,0.18); }
+.nav-pill.cta { background: var(--orange); color: var(--white); border-color: var(--orange); }
+.nav-pill.cta:hover { background: var(--orange-dark); border-color: var(--orange-dark); }
+
+/* ══ LAYOUT ══════════════════════════════════════════════════════════════════ */
+.page-wrap { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
+
+/* ══ HERO ════════════════════════════════════════════════════════════════════ */
+.hero { padding: calc(var(--hh) + 60px) 0 52px; background: var(--white); border-bottom: 1px solid var(--borderl); }
+.hero-eyebrow {
+  font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px;
+  display: flex; align-items: center; gap: 10px;
+}
+.hero-eyebrow::before { content: ''; width: 8px; height: 8px; background: var(--orange); flex-shrink: 0; }
+.hero-tagline {
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue);
+  margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+}
+.hero-tagline .arr { color: var(--orange); }
+.hero-headline { font-family: 'DM Serif Display', serif; font-size: clamp(44px,7vw,80px); font-weight: 700; line-height: 1.02; letter-spacing: -0.02em; color: var(--navy); margin-bottom: 18px; }
+.hero-headline .hl { color: var(--blue); position: relative; display: inline-block; }
+.hero-headline .hl::after { content: ''; position: absolute; left: 0; bottom: 3px; width: 100%; height: 5px; background: var(--orange); z-index: -1; }
+.hero-sub { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 480px; }
+
+/* ══ DIVIDERS & TOOL ═════════════════════════════════════════════════════════ */
+.section-rule { border: none; border-top: 2px solid var(--blue); margin: 0; }
+.tool { padding: 40px 0 80px; }
+.section-lbl {
+  font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue);
+  margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+}
+.section-lbl::before { content: ''; width: 14px; height: 2px; background: var(--orange); flex-shrink: 0; }
+
+/* ══ SIGNAL SUBMISSION CARD ══════════════════════════════════════════════════ */
+input[type="file"] { display: none; }
+
+.signal-card {
+  background: var(--white);
+  border: 1px solid var(--borderl);
+  box-shadow: 0 2px 12px rgba(0,107,182,0.07);
+  overflow: hidden;
+}
+
+/* Upload zone — large centered area */
+.upload-zone {
+  width: 100%;
+  min-height: 260px;
+  background: var(--card);
+  border: 2px dashed var(--border);
+  border-radius: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  cursor: pointer; position: relative; overflow: hidden;
+  transition: border-color 0.2s, background 0.2s;
+  margin: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.upload-zone:hover  { border-color: var(--blue); background: var(--blue-dim); }
+.upload-zone.drag-over { border-color: var(--blue); background: var(--blue-dim); border-style: solid; }
+.upload-zone.has-image { border-style: solid; border-color: var(--borderl); background: var(--navy); }
+
+/* idle state */
+.upload-idle {
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  padding: 2.5rem 2rem; text-align: center; pointer-events: none;
+  transition: opacity 0.2s;
+}
+.upload-zone.has-image .upload-idle { display: none; }
+
+.upload-icon {
+  width: 56px; height: 56px;
+  background: var(--white); border: 1.5px solid var(--borderl);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+.upload-zone:hover .upload-icon { background: var(--orange); border-color: var(--orange); }
+.upload-zone:hover .upload-icon svg { stroke: #fff; }
+
+.upload-icon svg { width: 22px; height: 22px; stroke: var(--muted); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.2s; }
+
+.upload-title { font-family: 'DM Serif Display', serif; font-size: 22px; font-weight: 700; color: var(--navy); line-height: 1.15; }
+.upload-sub   { font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.upload-or    { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+
+.upload-browse-btn {
+  font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  background: var(--blue); color: var(--white);
+  border: none; padding: 10px 24px; cursor: pointer;
+  transition: background 0.15s;
+  pointer-events: auto;
+}
+.upload-browse-btn:hover { background: var(--blue-dark); }
+
+/* preview state — full-bleed image */
+.upload-preview-img {
+  width: 100%; height: 260px; object-fit: cover;
+  display: none; position: absolute; inset: 0;
+}
+.upload-zone.has-image .upload-preview-img { display: block; }
+
+.upload-preview-bar {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: var(--navy-80); backdrop-filter: blur(4px);
+  padding: 8px 16px;
+  display: none; align-items: center; justify-content: space-between;
+}
+.upload-zone.has-image .upload-preview-bar { display: flex; }
+
+.upload-preview-name {
+  font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.85);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 70%;
+}
+
+.upload-remove-btn {
+  background: none; border: 1px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.7);
+  font-family: 'IBM Plex Mono', monospace; font-size: 8px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 4px 10px; cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.upload-remove-btn:hover { border-color: rgba(255,255,255,0.7); color: #fff; }
+
+/* processing overlay */
+.upload-processing {
+  position: absolute; inset: 0;
+  background: rgba(11,16,32,0.62); backdrop-filter: blur(2px);
+  display: none; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+}
+.upload-zone.is-processing .upload-processing { display: flex; }
+.upload-zone.is-processing .upload-idle       { opacity: 0; pointer-events: none; }
+
+.proc-spinner {
+  width: 32px; height: 32px;
+  border: 2.5px solid rgba(255,255,255,0.15);
+  border-top-color: var(--orange);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.proc-label {
+  font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.8);
+  animation: nyc-pulse 1.4s ease-in-out infinite;
+}
+@keyframes nyc-pulse { 0%,100%{opacity:0.45} 50%{opacity:1} }
+
+/* success tick */
+.upload-tick {
+  position: absolute; top: 10px; right: 10px;
+  width: 24px; height: 24px; background: var(--orange);
+  display: none; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: #fff;
+  transition: opacity 0.4s ease;
+}
+.upload-zone.show-tick .upload-tick { display: flex; }
+.upload-zone.show-tick.tick-fading .upload-tick { opacity: 0; }
+
+/* helper text below upload zone */
+.upload-helper {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--borderl);
+  background: var(--white);
+}
+.upload-helper-text {
+  font-family: 'DM Sans', sans-serif; font-size: 13px;
+  color: var(--muted); line-height: 1.65;
+}
+
+/* context textarea */
+.context-wrap { padding: 18px 20px 20px; }
+.context-label-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.context-label {
+  font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+}
+.context-optional {
+  font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--borderl);
+  background: var(--card); padding: 2px 7px; border: 1px solid var(--borderl);
+}
+textarea#contextInput {
+  width: 100%; min-height: 90px;
+  border: 1.5px solid var(--borderl); border-radius: 0;
+  background: var(--card);
+  font-family: 'DM Sans', sans-serif; font-size: 14px;
+  color: var(--navy); line-height: 1.6;
+  padding: 12px 14px; resize: vertical; outline: none;
+  transition: border-color 0.15s;
+}
+textarea#contextInput:focus   { border-color: var(--blue); background: var(--white); }
+textarea#contextInput::placeholder { color: var(--muted); }
+
+/* signal card submit footer */
+.signal-footer {
+  padding: 18px 20px;
+  background: var(--card);
+  border-top: 1px solid var(--borderl);
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.signal-status {
+  font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted); line-height: 1.6; flex: 1;
+  transition: color 0.2s;
+}
+.signal-status.ready   { color: var(--blue); }
+.signal-status.is-error { color: var(--red); }
+
+.signal-submit-btn {
+  padding: 14px 28px;
+  background: var(--blue); color: var(--white);
+  border: none; cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  transition: background 0.15s, opacity 0.2s;
+  white-space: nowrap; flex-shrink: 0;
+}
+.signal-submit-btn:hover    { background: var(--blue-dark); }
+.signal-submit-btn:active   { background: var(--blue-deep); }
+.signal-submit-btn:disabled { opacity: 0.38; cursor: not-allowed; }
+
+/* Loader (reused below analysis wrap too) */
+.analysis-loader { display: none; padding: 16px 0 4px; }
+.analysis-loader.active { display: block; animation: rise 0.2s ease; }
+.loader-bar { height: 3px; background: var(--borderl); overflow: hidden; margin-bottom: 12px; }
+.loader-bar-fill { height: 100%; background: linear-gradient(90deg, transparent, var(--blue), var(--orange), var(--blue), transparent); width: 50%; animation: bar-slide 1.6s ease-in-out infinite; }
+@keyframes bar-slide { 0%{transform:translateX(-100%)} 100%{transform:translateX(300%)} }
+.loader-status { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--navy); margin-bottom: 4px; }
+.loader-hint   { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+
+@media (max-width: 500px) {
+  .upload-zone  { min-height: 200px; }
+  .upload-preview-img { height: 200px; }
+  .upload-title { font-size: 18px; }
+  .signal-footer { flex-direction: column; align-items: stretch; }
+  .signal-submit-btn { text-align: center; }
+}
+
+/* ══ ANALYSIS BLOCK ══════════════════════════════════════════════════════════ */
+.analysis-wrap { margin-top: 28px; background: var(--white); border: 1px solid var(--borderl); box-shadow: 0 2px 10px rgba(0,107,182,0.07); transition: opacity 0.4s ease; }
+.analysis-wrap.locked { opacity: 0.28; pointer-events: none; }
+.analysis-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px 14px; background: var(--navy); border-bottom: 2px solid var(--blue); }
+.analysis-header-lbl { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
+.ai-detected-badge { font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700; background: var(--orange); color: var(--white); padding: 3px 10px; letter-spacing: 0.1em; display: none; }
+.ai-detected-badge.visible { display: inline-block; }
+
+/* Confidence strip */
+.conf-strip { display: flex; gap: 6px; flex-wrap: wrap; padding: 12px 24px; border-bottom: 1px solid rgba(255,255,255,0.06); background: #0f1628; }
+.conf-badge { font-family: 'IBM Plex Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 10px; }
+.conf-badge.verified   { background: var(--green);  color: #fff; }
+.conf-badge.likely     { background: var(--blue);   color: #fff; }
+.conf-badge.inferred   { background: var(--orange); color: #fff; }
+.conf-badge.missing    { background: #4A5568;       color: #fff; }
+.conf-badge.inspection { background: var(--purple); color: #fff; }
+.conf-badge.conflicting{ background: var(--red);    color: #fff; }
+
+/* Fields */
+.issue-type-wrap { padding: 18px 24px 20px; border-bottom: 1px solid var(--borderl); background: var(--card); }
+.field-label-row { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+.field-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); cursor: default; }
+.ai-badge { font-family: 'IBM Plex Mono', monospace; font-size: 7px; font-weight: 700; background: var(--orange); color: var(--white); padding: 1px 5px; letter-spacing: 0.06em; display: none; }
+.ai-badge.visible { display: inline; }
+.tooltip-wrap { position: relative; display: inline-flex; }
+.tooltip-btn { width: 14px; height: 14px; background: none; border: 1px solid var(--borderl); border-radius: 50%; cursor: pointer; font-size: 7px; color: var(--muted); display: flex; align-items: center; justify-content: center; padding: 0; transition: border-color 0.15s; }
+.tooltip-btn:hover { border-color: var(--blue); color: var(--blue); }
+.tooltip-body { position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: var(--navy); color: rgba(255,255,255,0.9); font-family: 'DM Sans', sans-serif; font-size: 11px; line-height: 1.5; padding: 10px 12px; width: 190px; pointer-events: none; opacity: 0; transition: opacity 0.15s; z-index: 50; white-space: normal; }
+.tooltip-body::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: var(--navy); }
+.tooltip-wrap:hover .tooltip-body { opacity: 1; }
+select { width: 100%; border: none; border-bottom: 1.5px solid var(--borderl); border-radius: 0; background: transparent; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: var(--navy); padding: 6px 24px 8px 0; cursor: pointer; outline: none; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B7A99' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 2px center; min-height: 38px; transition: border-color 0.15s; }
+select:focus { border-bottom-color: var(--blue); outline: none; }
+select:hover:not(:focus) { border-bottom-color: var(--muted); }
+select.ai-filled { border-bottom-color: var(--orange); }
+#issueTypeSelect { font-size: 15px; font-weight: 600; }
+.fields-grid { display: grid; grid-template-columns: repeat(3,1fr); border-top: 1px solid var(--borderl); border-left: 1px solid var(--borderl); background: var(--white); }
+.field { padding: 18px 20px; border-right: 1px solid var(--borderl); border-bottom: 1px solid var(--borderl); }
+.form-footer { padding: 20px 24px; background: var(--card); border-top: 1px solid var(--borderl); }
+.submit-btn { width: 100%; padding: 16px 24px; background: var(--blue); color: var(--white); border: none; cursor: pointer; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; transition: background 0.15s, opacity 0.2s; min-height: 52px; }
+.submit-btn:hover { background: var(--blue-dark); }
+.submit-btn:active { background: var(--blue-deep); }
+.submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Loader styles defined above in signal card block */
+
+/* ══ RESULT ══════════════════════════════════════════════════════════════════ */
+.result-section { padding-top: 40px; animation: rise 0.35s ease; }
+@keyframes rise { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+.result-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.result-eyebrow::before { content: ''; width: 6px; height: 6px; background: var(--orange); flex-shrink: 0; }
+
+/* Evidence */
+.evidence-block { margin-top: 14px; background: var(--white); border: 1px solid var(--borderl); }
+.evidence-header-bar { padding: 12px 20px; border-bottom: 1px solid var(--borderl); background: var(--card); font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.evidence-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--borderl); border-left: 1px solid var(--borderl); }
+.evidence-item { padding: 14px 18px; border-right: 1px solid var(--borderl); border-bottom: 1px solid var(--borderl); display: flex; align-items: flex-start; gap: 10px; }
+.evidence-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+.evidence-dot.present  { background: var(--green); }
+.evidence-dot.missing  { background: #4A5568; }
+.evidence-dot.inspect  { background: var(--purple); }
+.evidence-dot.conflict { background: var(--red); }
+.evidence-item-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); margin-bottom: 3px; }
+.evidence-item-val { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--muted); line-height: 1.4; }
+.action-btns-row { display: flex; gap: 10px; flex-wrap: wrap; padding: 16px 20px; border-top: 1px solid var(--borderl); background: var(--card); }
+.act-btn { padding: 10px 20px; font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; border: none; transition: background 0.15s, transform 0.1s; }
+.act-btn:active { transform: scale(0.97); }
+.act-btn.primary { background: var(--blue); color: var(--white); }
+.act-btn.primary:hover { background: var(--blue-dark); }
+.act-btn.warn { background: var(--purple); color: var(--white); }
+.act-btn.warn:hover { background: #6D28D9; }
+.act-btn.ghost { background: transparent; color: var(--navy); border: 1px solid var(--border); }
+.act-btn.ghost:hover { border-color: var(--blue); color: var(--blue); }
+
+/* Action cards */
+.action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+.action-card { background: var(--card); border: 1px solid var(--borderl); border-top: 3px solid var(--blue); padding: 20px; }
+.action-card.orange { border-top-color: var(--orange); }
+.action-card-label { font-family: 'IBM Plex Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.action-card-value { font-family: 'DM Serif Display', serif; font-size: 20px; font-weight: 700; color: var(--navy); line-height: 1.2; }
+.action-card-meta { font-family: 'IBM Plex Mono', monospace; font-size: 8px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 6px; }
+.severity-badge { display: inline-block; padding: 3px 10px; font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 8px; }
+.severity-badge.high   { background: var(--red);    color: #fff; }
+.severity-badge.medium { background: var(--orange);  color: #fff; }
+.severity-badge.low    { background: var(--green);   color: #fff; }
+
+/* Recommended block */
+.recommended-block { margin-top: 18px; padding: 24px; background: var(--navy); border-left: 4px solid var(--orange); }
+.recommended-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--orange); margin-bottom: 10px; }
+.recommended-action { font-family: 'DM Serif Display', serif; font-size: clamp(18px,2.8vw,28px); font-weight: 700; line-height: 1.25; color: var(--white); }
+.recommended-meta { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 10px; }
+.result-divider { border: none; border-top: 1px solid var(--borderl); margin: 36px 0 0; }
+
+/* ══ SAVE PANEL ══════════════════════════════════════════════════════════════ */
+.save-panel { margin-top: 20px; background: var(--white); border: 1px solid var(--borderl); }
+.save-panel-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; border-bottom: 1px solid var(--borderl); background: var(--card); }
+.save-panel-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.save-panel-form { padding: 14px 20px; }
+.save-panel-row { display: flex; align-items: center; gap: 10px; }
+.save-panel-row input[type="text"] { flex: 1; border: none; border-bottom: 1.5px solid var(--borderl); border-radius: 0; background: transparent; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; color: var(--navy); padding: 6px 0 8px; outline: none; min-height: 38px; transition: border-color 0.15s; }
+.save-panel-row input[type="text"]:focus { border-bottom-color: var(--blue); }
+.save-panel-row input[type="text"]::placeholder { color: var(--muted); font-size: 13px; }
+.save-item-btn { padding: 10px 20px; background: var(--orange); color: var(--white); border: none; cursor: pointer; font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; transition: background 0.15s; }
+.save-item-btn:hover { background: var(--orange-dark); }
+.submit-another-cta { display: none; margin-top: 12px; }
+.submit-another-btn { font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); background: none; border: none; border-bottom: 1px solid var(--blue); padding-bottom: 1px; cursor: pointer; transition: color 0.15s, border-color 0.15s; }
+.submit-another-btn:hover { color: var(--muted); border-color: var(--muted); }
+
+/* ══ HISTORY ══════════════════════════════════════════════════════════════════ */
+.history-section { padding: 0 0 80px; }
+.history-empty { padding: 40px 24px; text-align: center; border: 1.5px dashed var(--border); background: var(--card); }
+.history-empty-icon { font-size: 28px; margin-bottom: 10px; opacity: 0.4; }
+.history-empty-text { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+.history-list { display: flex; flex-direction: column; gap: 8px; }
+.history-item { background: var(--white); border: 1px solid var(--borderl); border-left: 3px solid var(--blue); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; animation: rise 0.25s ease; }
+.history-item.severity-high   { border-left-color: var(--red); }
+.history-item.severity-medium { border-left-color: var(--orange); }
+.history-item.severity-low    { border-left-color: var(--green); }
+.history-item-type { font-family: 'DM Serif Display', serif; font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.history-item-meta { font-family: 'IBM Plex Mono', monospace; font-size: 8px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+.history-item-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.history-conf-badge { font-family: 'IBM Plex Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 9px; }
+.history-del-btn { background: none; border: 1px solid var(--borderl); color: var(--muted); cursor: pointer; font-size: 11px; padding: 4px 8px; transition: border-color 0.15s, color 0.15s; }
+.history-del-btn:hover { border-color: var(--red); color: var(--red); }
+
+/* ══ TOAST ═══════════════════════════════════════════════════════════════════ */
+.toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 999; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+.toast { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 12px 18px; background: var(--navy); color: var(--white); border-left: 3px solid var(--orange); animation: toast-in 0.25s ease; pointer-events: auto; }
+.toast.error { border-left-color: var(--red); }
+@keyframes toast-in { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
+
+/* ══ RESPONSIVE ══════════════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  .page-wrap { padding: 0 1.25rem; }
+  .hero { padding-top: calc(var(--hh) + 36px); padding-bottom: 36px; }
+  .fields-grid { grid-template-columns: 1fr 1fr; }
+  .action-grid { grid-template-columns: 1fr; }
+  .evidence-grid { grid-template-columns: 1fr; }
+  .action-btns-row { flex-direction: column; }
+  .save-panel-row { flex-direction: column; align-items: stretch; }
+  .header-nav { display: none; }
+}
+@media (max-width: 400px) {
+  .hero-headline { font-size: 38px; }
+  .fields-grid { grid-template-columns: 1fr; }
+  .multi-upload-zone { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-brand">
+    <div class="header-logo">Project<span>NYC</span></div>
+    <div class="header-tag">The City Hacks The State &middot; Signal Intelligence v1.2</div>
+  </div>
+  <nav class="header-nav">
+    <a href="#hero"     class="nav-pill active">Signal</a>
+    <a href="#analysis" class="nav-pill">Analysis</a>
+    <a href="#evidence" class="nav-pill">Evidence</a>
+    <a href="#action"   class="nav-pill">Action</a>
+    <a href="#history"  class="nav-pill">History</a>
+    <button class="nav-pill cta" onclick="resetAll()">New Signal</button>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="page-wrap">
+    <p class="hero-eyebrow">ProjectNYC &middot; NYC School &amp; Facility Intelligence &middot; Internal Tool</p>
+    <div class="hero-tagline">Student Signal <span class="arr">&rarr;</span> Evidence <span class="arr">&rarr;</span> Action</div>
+    <h1 class="hero-headline">Surface the<br><span class="hl">issue.</span> Act now.</h1>
+    <p class="hero-sub">Upload signal evidence &mdash; photos, work orders, observation notes &mdash; and AI classifies the issue, assesses severity, and generates a recommended action for your NYC facility team.</p>
+  </div>
+</section>
+
+<hr class="section-rule">
+
+<div class="page-wrap">
+<section class="tool">
+
+  <!-- 1. STUDENT SIGNAL -->
+  <p class="section-lbl">1 &middot; Student Signal</p>
+
+  <div class="signal-card">
+
+    <!-- Large upload zone -->
+    <div class="upload-zone" id="uploadZone"
+         onclick="uploadZoneClick(event)"
+         ondragover="uploadDragOver(event)"
+         ondragleave="uploadDragLeave(event)"
+         ondrop="uploadDrop(event)">
+
+      <!-- Idle state -->
+      <div class="upload-idle">
+        <div class="upload-icon">
+          <svg viewBox="0 0 24 24"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+        </div>
+        <div>
+          <p class="upload-title">Upload Evidence</p>
+          <p class="upload-sub" style="margin-top:6px">Drag &amp; drop a photo here</p>
+        </div>
+        <p class="upload-or">or</p>
+        <button type="button" class="upload-browse-btn" onclick="document.getElementById('inputEvidence').click();event.stopPropagation()">Browse Files</button>
+      </div>
+
+      <!-- Preview (shown after file picked) -->
+      <img id="uploadPreviewImg" class="upload-preview-img" src="" alt="Evidence preview">
+      <div class="upload-preview-bar">
+        <span class="upload-preview-name" id="uploadPreviewName"></span>
+        <button type="button" class="upload-remove-btn" onclick="clearEvidence(event)">Remove</button>
+      </div>
+
+      <!-- Processing overlay -->
+      <div class="upload-processing">
+        <div class="proc-spinner"></div>
+        <p class="proc-label">Detecting issue&hellip;</p>
+      </div>
+
+      <!-- Success tick -->
+      <div class="upload-tick">&#x2713;</div>
+    </div>
+    <input type="file" id="inputEvidence" accept="image/*" onchange="handleEvidence(this)">
+
+    <!-- Helper text -->
+    <div class="upload-helper">
+      <p class="upload-helper-text">Upload a photo of the issue. ProjectNYC will identify the problem, estimate severity, determine affected systems, and recommend next actions.</p>
+    </div>
+
+    <!-- Optional context -->
+    <div class="context-wrap">
+      <div class="context-label-row">
+        <span class="context-label">Additional Context</span>
+        <span class="context-optional">Optional</span>
+      </div>
+      <textarea id="contextInput" placeholder="Describe what you noticed — where it is, when it started, who it affects&hellip;" oninput="updateSignalStatus()"></textarea>
+    </div>
+
+    <!-- Footer: status + submit -->
+    <div class="signal-footer">
+      <span class="signal-status" id="signalStatus">Upload a photo or add context to get started.</span>
+      <button class="signal-submit-btn" id="submitBtn" onclick="runAnalysis()" disabled>Analyze Signal</button>
+    </div>
+
+  </div>
+
+  <!-- Loader shown during analysis -->
+  <div class="analysis-loader" id="analysisLoader" style="margin-top:12px">
+    <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+    <p class="loader-status" id="loaderStatus">Analyzing signal&hellip;</p>
+    <p class="loader-hint">Identifying issue type, severity, and recommended actions.</p>
+  </div>
+
+  <!-- 2. AI ANALYSIS -->
+  <div class="analysis-wrap locked" id="analysisWrap" style="margin-top:28px">
+    <div class="analysis-header" id="analysis">
+      <span class="analysis-header-lbl">2 &middot; AI Analysis</span>
+      <span class="ai-detected-badge" id="aiDetectedBadge">AI Detected</span>
+    </div>
+    <div class="conf-strip">
+      <span class="conf-badge verified">Verified</span>
+      <span class="conf-badge likely">Likely</span>
+      <span class="conf-badge inferred">Inferred</span>
+      <span class="conf-badge missing">Missing</span>
+      <span class="conf-badge inspection">Needs Inspection</span>
+      <span class="conf-badge conflicting">Conflicting</span>
+    </div>
+    <div class="issue-type-wrap">
+      <div class="field-label-row">
+        <span class="field-label">Issue Type</span>
+        <span class="ai-badge" id="badge-issuetype">AI</span>
+      </div>
+      <select id="issueTypeSelect" onchange="handleIssueTypeChange(this.value)">
+        <option value="auto">Auto-detect after upload</option>
+        <option value="hvac">HVAC / Ventilation</option>
+        <option value="plumbing">Plumbing / Water</option>
+        <option value="electrical">Electrical / Lighting</option>
+        <option value="structural">Structural / Safety</option>
+        <option value="pest">Pest / Sanitation</option>
+        <option value="mold">Mold / Air Quality</option>
+        <option value="elevator">Elevator / Accessibility</option>
+        <option value="fire">Fire Safety / Sprinkler</option>
+      </select>
+    </div>
+    <div id="signalFields"></div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result-section" id="resultSection" style="display:none">
+
+    <p class="result-eyebrow" id="resultEyebrow">NYC Facility Intelligence</p>
+
+    <!-- 3. EVIDENCE -->
+    <p class="section-lbl" style="margin-top:32px" id="evidence">3 &middot; Evidence Assessment</p>
+    <div class="evidence-block">
+      <div class="evidence-header-bar">Evidence quality determines confidence label</div>
+      <div class="evidence-grid" id="evidenceGrid"></div>
+      <div class="action-btns-row" id="action">
+        <button class="act-btn primary" onclick="queueUpdate()">Queue Update</button>
+        <button class="act-btn warn"    onclick="markInspection()">Mark Needs Inspection</button>
+        <button class="act-btn ghost"   onclick="draftCriticalAsset()">Draft CriticalAsset Update</button>
+      </div>
+    </div>
+
+    <!-- 4. ACTION -->
+    <p class="section-lbl" style="margin-top:28px">4 &middot; Recommended Action</p>
+    <div class="action-grid" id="actionGrid"></div>
+    <div class="recommended-block">
+      <p class="recommended-eyebrow">Recommended Next Step</p>
+      <p class="recommended-action" id="recommendedAction"></p>
+      <p class="recommended-meta" id="recommendedMeta"></p>
+    </div>
+
+    <hr class="result-divider">
+
+    <!-- SAVE -->
+    <div class="save-panel">
+      <div class="save-panel-header"><span class="save-panel-label">Save to Signal History</span></div>
+      <div class="save-panel-form">
+        <div class="save-panel-row">
+          <input type="text" id="sessionNameInput" placeholder="Session name (e.g. PS 123 &mdash; Boiler Room)">
+          <button class="save-item-btn" id="saveBtn" onclick="saveToHistory()">Save Signal</button>
+        </div>
+      </div>
+      <div class="submit-another-cta" id="submitAnotherCta">
+        <button class="submit-another-btn" onclick="resetAll()">Submit another signal &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. HISTORY -->
+  <hr class="result-divider" style="margin-top:48px;margin-bottom:28px">
+  <p class="section-lbl" id="history">5 &middot; Signal History</p>
+  <section class="history-section">
+    <div id="historyList"></div>
+  </section>
+
+</section>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+/* ══ DATA ══════════════════════════════════════════════════════════════════ */
+const ISSUE_TYPES = {
+  auto:       { label: 'Auto-detect',            short: 'Auto' },
+  hvac:       { label: 'HVAC / Ventilation',      short: 'HVAC' },
+  plumbing:   { label: 'Plumbing / Water',         short: 'Plumbing' },
+  electrical: { label: 'Electrical / Lighting',    short: 'Electrical' },
+  structural: { label: 'Structural / Safety',      short: 'Structural' },
+  pest:       { label: 'Pest / Sanitation',        short: 'Pest' },
+  mold:       { label: 'Mold / Air Quality',       short: 'Mold' },
+  elevator:   { label: 'Elevator / Accessibility', short: 'Elevator' },
+  fire:       { label: 'Fire Safety / Sprinkler',  short: 'Fire Safety' },
+};
+
+const FIELDS = {
+  hvac: [
+    { id:'location', label:'Location',       tip:'Where in the building is the issue occurring?',
+      opts:[['classroom','Classroom'],['hallway','Hallway'],['cafeteria','Cafeteria'],['gym','Gymnasium'],['bathroom','Bathroom'],['boiler_room','Boiler Room'],['roof','Roof']] },
+    { id:'asset',    label:'Asset / System', tip:'Which HVAC asset is affected?',
+      opts:[['unit_ventilator','Unit Ventilator'],['boiler','Boiler'],['duct','Ductwork'],['thermostat','Thermostat'],['exhaust_fan','Exhaust Fan']] },
+    { id:'severity', label:'Severity',       tip:'How urgently does this need attention?',
+      opts:[['high','High — No heat / cooling'],['medium','Medium — Reduced output'],['low','Low — Noise / minor']] },
+    { id:'active',   label:'Still Active?',  tip:'Is the issue still occurring right now?', bool: true },
+    { id:'workorder',label:'Work Order?',    tip:'Is there an open work order for this?',   bool: true },
+    { id:'affected', label:'Who Affected',   tip:'Scope of students or staff impacted.',
+      opts:[['single_room','Single Room'],['floor','Entire Floor'],['building','Whole Building']] },
+  ],
+  plumbing: [
+    { id:'location', label:'Location',       tip:'Where in the building is the issue?',
+      opts:[['bathroom','Bathroom'],['kitchen','Kitchen / Cafeteria'],['classroom','Classroom'],['basement','Basement'],['roof','Roof Drain']] },
+    { id:'asset',    label:'Asset / System', tip:'Which plumbing asset is affected?',
+      opts:[['toilet','Toilet'],['sink','Sink'],['pipe','Pipe / Main'],['drain','Drain'],['water_heater','Water Heater'],['fountain','Water Fountain']] },
+    { id:'severity', label:'Severity',       tip:'How urgently does this need attention?',
+      opts:[['high','High — Flooding / No water'],['medium','Medium — Leak / Low pressure'],['low','Low — Slow drain / drip']] },
+    { id:'active',   label:'Still Active?',  tip:'Is the issue still occurring right now?', bool: true },
+    { id:'workorder',label:'Work Order?',    tip:'Is there an open work order for this?',   bool: true },
+    { id:'affected', label:'Who Affected',   tip:'Scope of students or staff impacted.',
+      opts:[['single_room','Single Room'],['floor','Entire Floor'],['building','Whole Building']] },
+  ],
+  electrical: [
+    { id:'location', label:'Location',       tip:'Where in the building is the issue?',
+      opts:[['classroom','Classroom'],['hallway','Hallway'],['cafeteria','Cafeteria'],['gym','Gymnasium'],['exterior','Exterior']] },
+    { id:'asset',    label:'Asset / System', tip:'Which electrical asset is affected?',
+      opts:[['lighting','Lighting Fixture'],['outlet','Outlet / Breaker'],['panel','Electrical Panel'],['emergency_light','Emergency Light'],['intercom','Intercom / PA']] },
+    { id:'severity', label:'Severity',       tip:'How urgently does this need attention?',
+      opts:[['high','High — Power out / Hazard'],['medium','Medium — Partial / Flicker'],['low','Low — Bulb / Minor']] },
+    { id:'active',   label:'Still Active?',  tip:'Is the issue still occurring right now?', bool: true },
+    { id:'workorder',label:'Work Order?',    tip:'Is there an open work order for this?',   bool: true },
+    { id:'affected', label:'Who Affected',   tip:'Scope of students or staff impacted.',
+      opts:[['single_room','Single Room'],['floor','Entire Floor'],['building','Whole Building']] },
+  ],
+  structural: [
+    { id:'location', label:'Location',       tip:'Where in the building is the issue?',
+      opts:[['ceiling','Ceiling'],['floor','Floor'],['wall','Wall'],['stairs','Stairs'],['exterior','Exterior / Facade'],['playground','Playground']] },
+    { id:'asset',    label:'Element',        tip:'What structural element is involved?',
+      opts:[['ceiling_tile','Ceiling Tile'],['window','Window'],['door','Door / Frame'],['railing','Railing'],['masonry','Masonry / Brick'],['roof','Roof']] },
+    { id:'severity', label:'Severity',       tip:'How urgently does this need attention?',
+      opts:[['high','High — Imminent hazard'],['medium','Medium — Deteriorating'],['low','Low — Cosmetic']] },
+    { id:'active',   label:'Still Active?',  tip:'Is the issue still occurring right now?', bool: true },
+    { id:'workorder',label:'Work Order?',    tip:'Is there an open work order for this?',   bool: true },
+    { id:'affected', label:'Who Affected',   tip:'Scope of students or staff impacted.',
+      opts:[['single_room','Single Room'],['floor','Entire Floor'],['building','Whole Building']] },
+  ],
+  pest: [
+    { id:'location', label:'Location',    tip:'Where was the pest activity observed?',
+      opts:[['classroom','Classroom'],['cafeteria','Cafeteria'],['bathroom','Bathroom'],['kitchen','Kitchen'],['storage','Storage / Closet'],['hallway','Hallway']] },
+    { id:'asset',    label:'Pest Type',   tip:'What type of pest was observed?',
+      opts:[['rodent','Rodent (Mice/Rat)'],['cockroach','Cockroach'],['bedbug','Bed Bug'],['fly','Flies'],['ant','Ants'],['other','Other']] },
+    { id:'severity', label:'Severity',    tip:'How urgently does this need attention?',
+      opts:[['high','High — Active infestation'],['medium','Medium — Signs / droppings'],['low','Low — Isolated sighting']] },
+    { id:'active',   label:'Still Active?', tip:'Is the issue still occurring right now?', bool: true },
+    { id:'workorder',label:'Work Order?', tip:'Is there an open work order for this?',     bool: true },
+    { id:'affected', label:'Who Affected',tip:'Scope of students or staff impacted.',
+      opts:[['single_room','Single Room'],['floor','Entire Floor'],['building','Whole Building']] },
+  ],
+  mold: [
+    { id:'location', label:'Location',       tip:'Where was mold or air quality issue observed?',
+      opts:[['classroom','Classroom'],['bathroom','Bathroom'],['hallway','Hallway'],['basement','Basement'],['ceiling','Ceiling / Roof'],['cafeteria','Cafeteria']] },
+    { id:'asset',    label:'Surface / System',tip:'What surface or system is affected?',
+      opts:[['wall','Wall / Ceiling'],['floor','Floor'],['hvac_duct','HVAC Duct'],['window','Window Frame'],['carpet','Carpet']] },
+    { id:'severity', label:'Severity',       tip:'How urgently does this need attention?',
+      opts:[['high','High — Large area / Smell'],['medium','Medium — Visible growth'],['low','Low — Staining / Suspected']] },
+    { id:'active',   label:'Still Active?',  tip:'Is the issue still occurring right now?', bool: true },
+    { id:'workorder',label:'Work Order?',    tip:'Is there an open work order for this?',   bool: true },
+    { id:'affected', label:'Who Affected',   tip:'Scope of students or staff impacted.',
+      opts:[['single_room','Single Room'],['floor','Entire Floor'],['building','Whole Building']] },
+  ],
+  elevator: [
+    { id:'location', label:'Unit',       tip:'Which elevator or lift is affected?',
+      opts:[['elevator_1','Elevator #1'],['elevator_2','Elevator #2'],['lift','Platform Lift'],['ramp','Ramp / Entry']] },
+    { id:'asset',    label:'Component',  tip:'Which component of the elevator is involved?',
+      opts:[['door','Door / Gate'],['button','Button / Panel'],['cable','Cable / Mechanism'],['alarm','Emergency Alarm'],['full_unit','Full Unit Out']] },
+    { id:'severity', label:'Severity',   tip:'How urgently does this need attention?',
+      opts:[['high','High — Out of service'],['medium','Medium — Intermittent'],['low','Low — Noise / Slow']] },
+    { id:'active',   label:'Still Active?', tip:'Is the issue still occurring right now?', bool: true },
+    { id:'workorder',label:'Work Order?',   tip:'Is there an open work order for this?',   bool: true },
+    { id:'affected', label:'Who Affected',  tip:'Scope of students or staff impacted.',
+      opts:[['single_room','Single Unit'],['floor','Multiple Floors'],['building','Whole Building']] },
+  ],
+  fire: [
+    { id:'location', label:'Location',      tip:'Where is the fire safety issue located?',
+      opts:[['hallway','Hallway'],['stairwell','Stairwell'],['classroom','Classroom'],['cafeteria','Cafeteria'],['boiler_room','Boiler Room'],['roof','Roof']] },
+    { id:'asset',    label:'Asset / System',tip:'Which fire safety asset is involved?',
+      opts:[['alarm','Fire Alarm'],['sprinkler','Sprinkler Head'],['extinguisher','Extinguisher'],['exit_sign','Exit Sign'],['door','Fire Door'],['panel','Fire Panel']] },
+    { id:'severity', label:'Severity',      tip:'How urgently does this need attention?',
+      opts:[['high','High — Non-functional / Hazard'],['medium','Medium — Damaged / Expired'],['low','Low — Blocked / Cosmetic']] },
+    { id:'active',   label:'Still Active?', tip:'Is the issue still occurring right now?', bool: true },
+    { id:'workorder',label:'Work Order?',   tip:'Is there an open work order for this?',   bool: true },
+    { id:'affected', label:'Who Affected',  tip:'Scope of students or staff impacted.',
+      opts:[['single_room','Single Area'],['floor','Entire Floor'],['building','Whole Building']] },
+  ],
+};
+
+const ACTIONS = {
+  hvac:       'Escalate to facilities coordinator — HVAC inspection within 48 hrs · Log in CriticalAsset',
+  plumbing:   'Dispatch plumbing crew — isolate valve if flooding · Update CriticalAsset ticket immediately',
+  electrical: 'Notify building engineer — isolate circuit if hazard · Restrict area access until cleared',
+  structural: 'Cordon affected area immediately · Request structural inspection — file DOE facility report',
+  pest:       'Submit NYC 311 IPM request · Notify custodial staff · Schedule professional inspection',
+  mold:       'Restrict area access · Notify school nurse · File air quality complaint with DOE',
+  elevator:   'Post out-of-service notice · Contact DOB-licensed elevator contractor · File ADA report if needed',
+  fire:       'Contact FDNY if imminent risk · Notify building fire safety director · Log DOB violation',
+};
+
+const CONF_MAP = {
+  high:   { text: 'Likely',   cls: 'likely' },
+  medium: { text: 'Inferred', cls: 'inferred' },
+  low:    { text: 'Missing',  cls: 'missing' },
+};
+
+/* ══ STATE ═════════════════════════════════════════════════════════════════ */
+let evidenceFile  = null;   // single image file
+let currentType   = 'auto';
+let analyzing     = false;
+let currentResult = null;
+let history = [];
+try { history = JSON.parse(localStorage.getItem('pnyc_history') || '[]'); } catch(e){}
+
+/* ══ UPLOAD ZONE ════════════════════════════════════════════════════════════ */
+function uploadZoneClick(e) {
+  // Don't trigger file input if clicking Remove or Browse (they handle themselves)
+  if (e.target.closest('.upload-remove-btn') || e.target.closest('.upload-browse-btn')) return;
+  document.getElementById('inputEvidence').click();
+}
+function uploadDragOver(e) {
+  e.preventDefault();
+  document.getElementById('uploadZone').classList.add('drag-over');
+}
+function uploadDragLeave(e) {
+  document.getElementById('uploadZone').classList.remove('drag-over');
+}
+function uploadDrop(e) {
+  e.preventDefault();
+  document.getElementById('uploadZone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) applyEvidenceFile(file);
+}
+function handleEvidence(inp) {
+  if (!inp.files || !inp.files[0]) return;
+  applyEvidenceFile(inp.files[0]);
+}
+function applyEvidenceFile(file) {
+  evidenceFile = file;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const zone = document.getElementById('uploadZone');
+    document.getElementById('uploadPreviewImg').src = ev.target.result;
+    document.getElementById('uploadPreviewName').textContent = file.name;
+    zone.classList.add('has-image');
+    simulateDetect();
+  };
+  reader.readAsDataURL(file);
+}
+function clearEvidence(e) {
+  if (e) e.stopPropagation();
+  evidenceFile = null;
+  const zone = document.getElementById('uploadZone');
+  zone.classList.remove('has-image','is-processing','show-tick','tick-fading');
+  document.getElementById('uploadPreviewImg').src = '';
+  document.getElementById('uploadPreviewName').textContent = '';
+  document.getElementById('inputEvidence').value = '';
+  // Reset AI analysis block
+  setIssueType('auto');
+  document.getElementById('issueTypeSelect').value = 'auto';
+  document.getElementById('issueTypeSelect').classList.remove('ai-filled');
+  document.getElementById('badge-issuetype').classList.remove('visible');
+  document.getElementById('aiDetectedBadge').classList.remove('visible');
+  lockAnalysis();
+  updateSignalStatus();
+}
+
+/* Status line in signal card footer */
+function updateSignalStatus() {
+  const hasImg  = !!evidenceFile;
+  const hasTxt  = document.getElementById('contextInput').value.trim().length > 0;
+  const btn     = document.getElementById('submitBtn');
+  const status  = document.getElementById('signalStatus');
+
+  if (hasImg && hasTxt) {
+    status.textContent = 'Photo + context ready \u00b7 Click Analyze Signal to proceed.';
+    status.className = 'signal-status ready';
+    btn.disabled = false;
+  } else if (hasImg) {
+    status.textContent = 'Photo ready \u00b7 Click Analyze Signal to proceed.';
+    status.className = 'signal-status ready';
+    btn.disabled = false;
+  } else if (hasTxt) {
+    status.textContent = 'Context added \u00b7 Upload a photo for best results.';
+    status.className = 'signal-status';
+    btn.disabled = false;
+  } else {
+    status.textContent = 'Upload a photo or add context to get started.';
+    status.className = 'signal-status';
+    btn.disabled = true;
+  }
+}
+
+/* ══ DETECT (SIMULATED) ════════════════════════════════════════════════════ */
+function simulateDetect() {
+  const zone = document.getElementById('uploadZone');
+  zone.classList.add('is-processing');
+
+  const types    = Object.keys(ISSUE_TYPES).filter(k => k !== 'auto');
+  const detected = types[Math.floor(Math.random() * types.length)];
+
+  setTimeout(() => {
+    zone.classList.remove('is-processing');
+    zone.classList.add('show-tick');
+    setTimeout(() => {
+      zone.classList.add('tick-fading');
+      setTimeout(() => zone.classList.remove('show-tick','tick-fading'), 450);
+    }, 1800);
+
+    setIssueType(detected);
+    document.getElementById('issueTypeSelect').value = detected;
+    document.getElementById('issueTypeSelect').classList.add('ai-filled');
+    document.getElementById('badge-issuetype').classList.add('visible');
+    document.getElementById('aiDetectedBadge').classList.add('visible');
+    unlockAnalysis();
+    updateSignalStatus();
+    showToast('Issue type detected: ' + ISSUE_TYPES[detected].label);
+  }, 1400);
+}
+
+/* ══ ISSUE TYPE & LOCK ═════════════════════════════════════════════════════ */
+function handleIssueTypeChange(val) {
+  setIssueType(val);
+  if (val !== 'auto') unlockAnalysis();
+  else if (!evidenceFile) lockAnalysis();
+}
+function setIssueType(typeId) {
+  currentType = typeId;
+  const container = document.getElementById('signalFields');
+  const fields = FIELDS[typeId];
+  if (!fields) { container.innerHTML = ''; return; }
+  let html = '<div class="fields-grid">';
+  fields.forEach(f => {
+    const ctrl = f.bool
+      ? '<select id="field-'+f.id+'"><option value="0">No</option><option value="1">Yes</option></select>'
+      : '<select id="field-'+f.id+'">'+f.opts.map(([v,l])=>'<option value="'+v+'">'+l+'</option>').join('')+'</select>';
+    html += '<div class="field"><div class="field-label-row"><span class="field-label">'+f.label+'</span><span class="ai-badge" id="badge-'+f.id+'">AI</span><span class="tooltip-wrap"><button type="button" class="tooltip-btn">?</button><span class="tooltip-body">'+f.tip+'</span></span></div>'+ctrl+'</div>';
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+function lockAnalysis() {
+  document.getElementById('analysisWrap').classList.add('locked');
+}
+function unlockAnalysis() {
+  document.getElementById('analysisWrap').classList.remove('locked');
+}
+const LOADER_STAGES = ['Analyzing signal\u2026','Reading evidence\u2026','Classifying issue\u2026','Assessing severity\u2026','Building recommendation\u2026'];
+let _lIdx=0, _lInt=null;
+function showLoader() {
+  _lIdx=0; document.getElementById('loaderStatus').textContent=LOADER_STAGES[0];
+  document.getElementById('analysisLoader').classList.add('active');
+  _lInt=setInterval(()=>{_lIdx=(_lIdx+1)%LOADER_STAGES.length; document.getElementById('loaderStatus').textContent=LOADER_STAGES[_lIdx];},2000);
+}
+function hideLoader() { clearInterval(_lInt); document.getElementById('analysisLoader').classList.remove('active'); }
+
+function runAnalysis() {
+  if (analyzing) return;
+  if (currentType === 'auto' && !evidenceFile) { showToast('Upload a photo or add context first', 'error'); return; }
+  // If still auto after text-only submission, pick a random type
+  if (currentType === 'auto') {
+    const types = Object.keys(ISSUE_TYPES).filter(k => k !== 'auto');
+    setIssueType(types[Math.floor(Math.random() * types.length)]);
+    document.getElementById('issueTypeSelect').value = currentType;
+  }
+  analyzing = true;
+  document.getElementById('submitBtn').disabled = true;
+  showLoader();
+  setTimeout(() => { hideLoader(); buildResult(); analyzing = false; document.getElementById('submitBtn').disabled = false; }, 2500);
+}
+
+function buildResult() {
+  const typeId = currentType;
+  const cfg    = ISSUE_TYPES[typeId];
+  const fields = FIELDS[typeId] || [];
+  const sevEl  = document.getElementById('field-severity');
+  const severity     = sevEl ? sevEl.value : 'medium';
+  const severityTxt  = sevEl ? sevEl.options[sevEl.selectedIndex].text : 'Medium';
+  const woEl   = document.getElementById('field-workorder');
+  const workorder    = woEl ? woEl.value==='1' : false;
+  const locEl  = document.getElementById('field-location');
+  const locTxt       = locEl ? locEl.options[locEl.selectedIndex].text : 'Facility';
+  const assetEl = document.getElementById('field-asset');
+  const assetTxt     = assetEl ? assetEl.options[assetEl.selectedIndex].text : 'Asset';
+  const conf   = CONF_MAP[severity] || CONF_MAP.medium;
+
+  currentResult = { typeId, cfg, severity, severityTxt, locTxt, assetTxt, workorder, conf, timestamp: new Date().toLocaleString(), action: ACTIONS[typeId] || 'Escalate to facilities coordinator' };
+
+  // AI badges
+  fields.forEach(f=>{
+    const b=document.getElementById('badge-'+f.id); if(b) b.classList.add('visible');
+    const s=document.getElementById('field-'+f.id); if(s) s.classList.add('ai-filled');
+  });
+
+  document.getElementById('resultEyebrow').textContent = cfg.label+' \u00b7 '+locTxt+' \u00b7 NYC Facility Intelligence';
+
+  // Evidence grid
+  const woDot = workorder?'present':'missing';
+  const woVal = workorder?'Open work order found \u2014 cross-referenced':'No open work order \u2014 new ticket recommended';
+  document.getElementById('evidenceGrid').innerHTML =
+    '<div class="evidence-item"><div class="evidence-dot '+woDot+'"></div><div><p class="evidence-item-label">Existing Work Order</p><p class="evidence-item-val">'+woVal+'</p></div></div>'+
+    '<div class="evidence-item"><div class="evidence-dot '+(evidenceFile?'present':'missing')+'"></div><div><p class="evidence-item-label">Photo Evidence</p><p class="evidence-item-val">'+(evidenceFile?'Uploaded and analyzed':'Not provided')+'</p></div></div>'+
+    '<div class="evidence-item"><div class="evidence-dot present"></div><div><p class="evidence-item-label">Student Observation</p><p class="evidence-item-val">Signal submitted via ProjectNYC</p></div></div>'+
+    '<div class="evidence-item"><div class="evidence-dot inspect"></div><div><p class="evidence-item-label">On-Site Inspection</p><p class="evidence-item-val">On-site verification recommended</p></div></div>';
+
+  // Action cards
+  const sc = severity==='high'?'high':severity==='low'?'low':'medium';
+  document.getElementById('actionGrid').innerHTML =
+    '<div class="action-card"><p class="action-card-label">AI Confidence</p><p class="action-card-value">'+conf.text+'</p><p class="action-card-meta">'+(evidenceFile?'Photo evidence analyzed':'Text context only')+'</p></div>'+
+    '<div class="action-card orange"><p class="action-card-label">Severity Assessment</p><p class="action-card-value">'+assetTxt+'</p><span class="severity-badge '+sc+'">'+severityTxt.split(' \u2014 ')[0]+'</span><p class="action-card-meta">'+locTxt+' \u00b7 '+cfg.label+'</p></div>';
+
+  document.getElementById('recommendedAction').textContent = currentResult.action;
+  document.getElementById('recommendedMeta').textContent   = cfg.label+' \u00b7 '+locTxt+' \u00b7 Signal Intelligence v1.2';
+
+  const saveBtn = document.getElementById('saveBtn');
+  saveBtn.textContent='Save Signal'; saveBtn.disabled=false;
+
+  document.getElementById('resultSection').style.display='block';
+  document.getElementById('submitAnotherCta').style.display='none';
+  setTimeout(()=>document.getElementById('resultSection').scrollIntoView({behavior:'smooth',block:'nearest'}),150);
+}
+
+/* ══ EVIDENCE BUTTONS ══════════════════════════════════════════════════════ */
+function queueUpdate()       { showToast('Queue update submitted \u2014 ticket #'+Math.floor(Math.random()*90000+10000)); }
+function markInspection()    { showToast('Marked for inspection \u00b7 Assigned to building engineer'); }
+function draftCriticalAsset() {
+  if (!currentResult) return;
+  const d='CRITICALASSET UPDATE DRAFT\nIssue Type:  '+currentResult.cfg.label+'\nLocation:    '+currentResult.locTxt+'\nAsset:       '+currentResult.assetTxt+'\nSeverity:    '+currentResult.severityTxt+'\nConfidence:  '+currentResult.conf.text+'\nAction:      '+currentResult.action+'\nSubmitted:   '+currentResult.timestamp+'\nSource:      ProjectNYC Signal Intelligence v1.2';
+  navigator.clipboard.writeText(d).then(()=>showToast('CriticalAsset draft copied to clipboard')).catch(()=>showToast('Draft ready \u2014 clipboard unavailable','error'));
+}
+
+/* ══ HISTORY ═══════════════════════════════════════════════════════════════ */
+function saveToHistory() {
+  if (!currentResult) { showToast('Run analysis first','error'); return; }
+  const name = document.getElementById('sessionNameInput').value.trim() || currentResult.cfg.label+' \u2014 '+currentResult.locTxt;
+  const entry = { id:Date.now(), name, typeLabel:currentResult.cfg.label, loc:currentResult.locTxt, asset:currentResult.assetTxt, severity:currentResult.severity, conf:currentResult.conf, action:currentResult.action, ts:currentResult.timestamp };
+  history.unshift(entry);
+  try { localStorage.setItem('pnyc_history', JSON.stringify(history)); } catch(e){}
+  renderHistory();
+  showToast('Signal saved to history');
+  document.getElementById('submitAnotherCta').style.display='block';
+  const btn=document.getElementById('saveBtn'); btn.textContent='Saved \u2713'; btn.disabled=true;
+}
+function deleteHistoryItem(id) {
+  history=history.filter(e=>e.id!==id);
+  try { localStorage.setItem('pnyc_history', JSON.stringify(history)); } catch(e){}
+  renderHistory(); showToast('Signal removed');
+}
+function renderHistory() {
+  const c=document.getElementById('historyList');
+  if (!history.length) {
+    c.innerHTML='<div class="history-empty"><div class="history-empty-icon">&#x1F4CB;</div><p class="history-empty-text">No signals saved yet &middot; Run an analysis and save it above</p></div>';
+    return;
+  }
+  c.innerHTML='<div class="history-list">'+history.map(e=>'<div class="history-item severity-'+e.severity+'" id="hi-'+e.id+'"><div class="history-item-main"><p class="history-item-type">'+e.name+'</p><p class="history-item-meta">'+e.typeLabel+' &middot; '+e.loc+' &middot; '+e.asset+' &middot; '+e.ts+'</p></div><div class="history-item-right"><span class="history-conf-badge conf-badge '+e.conf.cls+'">'+e.conf.text+'</span><button class="history-del-btn" onclick="deleteHistoryItem('+e.id+')">&#x2715;</button></div></div>').join('')+'</div>';
+}
+
+/* ══ RESET ═════════════════════════════════════════════════════════════════ */
+function resetAll() {
+  clearEvidence();
+  currentType = 'auto'; currentResult = null;
+  document.getElementById('contextInput').value = '';
+  document.getElementById('sessionNameInput').value = '';
+  lockAnalysis();
+  document.getElementById('resultSection').style.display = 'none';
+  updateSignalStatus();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+/* ══ TOAST ═════════════════════════════════════════════════════════════════ */
+function showToast(msg, type) {
+  const c=document.getElementById('toastContainer');
+  const el=document.createElement('div'); el.className='toast'+(type==='error'?' error':''); el.textContent=msg;
+  c.appendChild(el);
+  setTimeout(()=>{el.style.transition='opacity 0.3s'; el.style.opacity='0'; setTimeout(()=>el.remove(),320);},3200);
+}
+
+/* ══ NAV SMOOTH SCROLL ═════════════════════════════════════════════════════ */
+document.querySelectorAll('a.nav-pill[href^="#"]').forEach(a=>{
+  a.addEventListener('click', e=>{
+    e.preventDefault();
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
+    document.querySelectorAll('a.nav-pill').forEach(p=>p.classList.remove('active'));
+    a.classList.add('active');
+  });
+});
+
+/* ══ INIT ══════════════════════════════════════════════════════════════════ */
+renderHistory();
+</script>
+</body>
+</html>
