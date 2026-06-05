@@ -448,6 +448,45 @@ select.ai-filled { border-bottom-color: var(--orange); }
   .multi-upload-zone { grid-template-columns: 1fr; }
 }
 
+/* ══ POINT OF CONTACT ════════════════════════════════════════════════════════ */
+.poc-section { margin-top: 28px; border: 1.5px solid var(--blue); background: var(--white); overflow: hidden; }
+.poc-header { background: var(--navy); padding: 13px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.poc-header-left { display: flex; align-items: center; gap: 12px; }
+.poc-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); }
+.poc-title { font-family: 'DM Serif Display', serif; font-size: 18px; font-weight: 700; color: var(--white); line-height: 1.1; }
+.poc-review-badge { font-family: 'IBM Plex Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 4px 10px; background: rgba(245,132,38,0.18); color: var(--orange); border: 1px solid rgba(245,132,38,0.35); white-space: nowrap; }
+.poc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-bottom: 1px solid var(--borderl); }
+.poc-cell { padding: 14px 20px; border-right: 1px solid var(--borderl); }
+.poc-cell:nth-child(even) { border-right: none; }
+.poc-cell-label { font-family: 'IBM Plex Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+.poc-cell-value { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.4; }
+.poc-cell-value.escalation { color: var(--red); }
+.poc-cell-value.team { color: var(--blue); }
+.poc-report-type { padding: 12px 20px; border-bottom: 1px solid var(--borderl); display: flex; align-items: center; gap: 10px; }
+.poc-report-label { font-family: 'IBM Plex Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.poc-report-name { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); background: var(--blue-dim); border: 1px solid rgba(0,107,182,0.18); padding: 4px 12px; }
+.poc-draft-wrap { padding: 16px 20px; border-bottom: 1px solid var(--borderl); }
+.poc-draft-label { font-family: 'IBM Plex Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.poc-draft-textarea { width: 100%; min-height: 200px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; line-height: 1.7; color: var(--text); background: var(--card); border: 1px solid var(--borderl); padding: 14px 16px; resize: vertical; outline: none; transition: border-color 0.15s; }
+.poc-draft-textarea:focus { border-color: var(--blue); }
+.poc-required-wrap { padding: 12px 20px; border-bottom: 1px solid var(--borderl); background: rgba(245,132,38,0.04); }
+.poc-required-label { font-family: 'IBM Plex Mono', monospace; font-size: 8px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--orange); margin-bottom: 6px; }
+.poc-required-list { list-style: none; margin: 0; padding: 0; }
+.poc-required-list li { font-size: 12px; color: var(--text); padding: 2px 0 2px 16px; position: relative; line-height: 1.5; }
+.poc-required-list li::before { content: '→'; position: absolute; left: 0; color: var(--orange); font-size: 10px; }
+.poc-review-row { padding: 12px 20px; border-bottom: 1px solid var(--borderl); display: flex; align-items: center; gap: 10px; }
+.poc-review-dot { width: 8px; height: 8px; background: var(--orange); flex-shrink: 0; }
+.poc-review-text { font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text); }
+.poc-actions { padding: 14px 20px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.poc-btn { font-family: 'IBM Plex Mono', monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 10px 18px; border: none; cursor: pointer; transition: background 0.15s, opacity 0.15s; }
+.poc-btn.primary { background: var(--blue); color: var(--white); }
+.poc-btn.primary:hover { background: var(--blue-dark); }
+.poc-btn.ghost { background: none; color: var(--blue); border: 1px solid var(--blue); }
+.poc-btn.ghost:hover { background: var(--blue-dim); }
+.poc-btn.warn { background: none; color: var(--orange); border: 1px solid var(--orange); }
+.poc-btn.warn:hover { background: rgba(245,132,38,0.08); }
+@media (max-width: 640px) { .poc-grid { grid-template-columns: 1fr; } .poc-cell { border-right: none; border-bottom: 1px solid var(--borderl); } }
+
 /* ══ WORK ORDERS DASHBOARD ════════════════════════════════════════════════════ */
 .wo-strip { background: var(--navy); border-bottom: 2px solid var(--blue); padding: 28px 0 32px; }
 .wo-strip-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:20px; gap:16px; }
@@ -718,6 +757,58 @@ select.ai-filled { border-bottom-color: var(--orange); }
         <div class="enrich-block-header">CriticalAsset Draft</div>
         <div class="enrich-block-body">
           <p class="enrich-val" id="enrichDraft" style="white-space:pre-wrap; line-height:1.6;"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- POINT OF CONTACT -->
+    <div id="pocSection" style="display:none;">
+      <div class="poc-section">
+        <div class="poc-header">
+          <div class="poc-header-left">
+            <div>
+              <p class="poc-eyebrow">Operational Routing</p>
+              <p class="poc-title">Point of Contact</p>
+            </div>
+          </div>
+          <span class="poc-review-badge">Human Review Required</span>
+        </div>
+
+        <div class="poc-grid">
+          <div class="poc-cell">
+            <p class="poc-cell-label">Responsible Team</p>
+            <p class="poc-cell-value team" id="pocTeam">—</p>
+          </div>
+          <div class="poc-cell">
+            <p class="poc-cell-label">Possible Escalation</p>
+            <p class="poc-cell-value escalation" id="pocEscalation">—</p>
+          </div>
+        </div>
+
+        <div class="poc-report-type">
+          <span class="poc-report-label">Suggested Report</span>
+          <span class="poc-report-name" id="pocReportType">—</span>
+        </div>
+
+        <div class="poc-required-wrap">
+          <p class="poc-required-label">Required Before Submission</p>
+          <ul class="poc-required-list" id="pocRequired"></ul>
+        </div>
+
+        <div class="poc-draft-wrap">
+          <p class="poc-draft-label">Report Draft &mdash; Editable</p>
+          <textarea class="poc-draft-textarea" id="pocDraft" spellcheck="true"></textarea>
+        </div>
+
+        <div class="poc-review-row">
+          <div class="poc-review-dot"></div>
+          <span class="poc-review-text" id="pocReviewStatus">Human Review Required &mdash; Do not close without field verification</span>
+        </div>
+
+        <div class="poc-actions">
+          <button class="poc-btn primary" onclick="pocQueueForReview()">Queue for Review</button>
+          <button class="poc-btn ghost"   onclick="pocCopyDraft()">Copy Draft</button>
+          <button class="poc-btn warn"    onclick="pocScheduleFollowUp()">Schedule Follow-Up</button>
         </div>
       </div>
     </div>
@@ -1129,8 +1220,111 @@ function buildResult(data) {
 
   document.getElementById('resultSection').style.display='block';
   document.getElementById('submitAnotherCta').style.display='none';
+  buildPointOfContact(data);
   setTimeout(()=>document.getElementById('resultSection').scrollIntoView({behavior:'smooth',block:'nearest'}),150);
 }
+
+/* ══ POINT OF CONTACT ══════════════════════════════════════════════════════ */
+const ROUTING = {
+  hvac:       { team:'HVAC Maintenance',                 escalation:'Building Operations if unresolved within 48 hrs',  report:'HVAC Investigation Report',               required:['BMS trend data or temperature log','Damper position confirmed','Supply air temp at diffuser','Prior WO numbers for same zone'] },
+  plumbing:   { team:'Facilities Maintenance',           escalation:'NYC DEP if infrastructure or main-line issue',      report:'Water Intrusion Report',                  required:['Photo of affected area','Drain or fixture ID','Duration of condition','Whether multiple fixtures are affected'] },
+  electrical: { team:'Electrical Maintenance',           escalation:'NYC DOB Electrical Unit if safety concern exists',  report:'Electrical Safety Report',                required:['Panel ID or circuit location','Whether breaker has tripped','Photo of affected fixture or panel','Presence of water near equipment'] },
+  structural: { team:'Facilities Engineering',           escalation:'NYC DOB',                                           report:'Structural Observation Report',            required:['Photo of crack, gap, or damage','Location and floor number','Whether material is falling or loose','Prior incidents in same location'] },
+  pest:       { team:'Custodial Services',               escalation:'NYC DOHMH if recurring or widespread',              report:'Sanitation Investigation Report',          required:['Species or evidence type (droppings, nesting)','Location and room number','Duration of condition','Proximity to food prep or storage'] },
+  mold:       { team:'Facilities + Health & Safety',     escalation:'NYC DOHMH',                                         report:'Indoor Air Quality Report',               required:['Photo of affected surface','Square footage estimate','Proximity to HVAC or water source','Prior water intrusion in same area'] },
+  elevator:   { team:'Facilities + Elevator Contractor', escalation:'NYC DOB Elevator Division',                         report:'Accessibility / Elevator Incident Report', required:['Elevator ID or cab number','Last inspection date','Description of malfunction','Whether occupants were present'] },
+  fire:       { team:'Facilities + Fire Life Safety',    escalation:'FDNY or NYC DOB if code issue confirmed',           report:'Fire Safety Observation Report',           required:['Location of device or egress path','Whether device is functional (visual test)','Last inspection sticker date','Floor plan reference if available'] },
+};
+
+function buildPointOfContact(data) {
+  const typeMap = { 'hvac':'hvac','ventilation':'hvac','plumbing':'plumbing','water':'plumbing','electrical':'electrical','lighting':'electrical','structural':'structural','safety':'structural','pest':'pest','sanitation':'pest','mold':'mold','air quality':'mold','elevator':'elevator','accessibility':'elevator','fire':'fire','sprinkler':'fire' };
+  const issueStr = (data.issue_type||'').toLowerCase();
+  let key = 'hvac';
+  for (const [k,v] of Object.entries(typeMap)) { if (issueStr.includes(k)) { key=v; break; } }
+  const r = ROUTING[key] || ROUTING.hvac;
+
+  document.getElementById('pocTeam').textContent       = r.team;
+  document.getElementById('pocEscalation').textContent = r.escalation;
+  document.getElementById('pocReportType').textContent = r.report;
+
+  const reqEl    = document.getElementById('pocRequired');
+  const aiMissing = (data.missing_information||[]).filter(m => m && m.length > 3).slice(0,2);
+  const combined  = [...new Set([...r.required, ...aiMissing])];
+  reqEl.innerHTML = combined.map(i=>`<li>${i}</li>`).join('');
+
+  const ts = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const evidence = (data.visible_evidence||[]).length
+    ? data.visible_evidence.map(e=>`  - ${e}`).join('\n')
+    : '  - Field observation submitted via ProjectNYC';
+  const missingLines = (data.missing_information||[]).length
+    ? data.missing_information.map(m=>`  - ${m}`).join('\n')
+    : '  - None identified';
+
+  document.getElementById('pocDraft').value = [
+    r.report.toUpperCase(),
+    'Date: '+ts+'    Source: ProjectNYC Signal Intelligence',
+    '',
+    'CLASSIFICATION',
+    'Issue Type:     '+(data.issue_type||'Unknown'),
+    'Severity:       '+((data.severity||'medium').charAt(0).toUpperCase()+(data.severity||'medium').slice(1)),
+    'Confidence:     '+(data.confidence_label||'Needs Inspection'),
+    'Asset / System: '+(data.likely_asset_or_system||'Unknown'),
+    '',
+    'SUMMARY',
+    'ProjectNYC received a student or field signal indicating a potential facility issue.',
+    'Affected users: '+(data.affected_users||'Unknown'),
+    '',
+    'EVIDENCE',
+    evidence,
+    '',
+    'MISSING INFORMATION',
+    missingLines,
+    '',
+    'RECOMMENDED ACTION',
+    (data.recommended_action||'Escalate to facilities coordinator.'),
+    '',
+    'ROUTING',
+    'Responsible Team:    '+r.team,
+    'Possible Escalation: '+r.escalation,
+    '',
+    'HUMAN REVIEW REQUIRED: YES',
+    'Do not close this report without on-site field verification.',
+  ].join('\n');
+
+  document.getElementById('pocReviewStatus').textContent = 'Human Review Required — Do not close without field verification';
+  document.getElementById('pocSection').style.display = 'block';
+}
+
+function pocQueueForReview() {
+  if (!currentResult) return;
+  const label = (currentResult.data && currentResult.data.issue_type) || currentResult.cfg.label;
+  const entry = {
+    id: Date.now(),
+    name: 'Review: '+label,
+    typeLabel: 'Point of Contact Review',
+    loc: (currentResult.data && currentResult.data.likely_asset_or_system)||'—',
+    asset: document.getElementById('pocTeam').textContent,
+    severity: currentResult.severity||'medium',
+    conf: currentResult.conf||CONF_MAP.medium,
+    action: document.getElementById('pocReportType').textContent,
+    ts: new Date().toLocaleString()
+  };
+  history.unshift(entry);
+  try { localStorage.setItem('pnyc_history', JSON.stringify(history)); } catch(e){}
+  renderHistory();
+  document.getElementById('pocReviewStatus').textContent = 'Queued for human review — item added to Signal History';
+  showToast('Queued for human review.');
+}
+
+function pocCopyDraft() {
+  const text = document.getElementById('pocDraft').value;
+  if (!text) { showToast('No draft to copy','error'); return; }
+  navigator.clipboard.writeText(text)
+    .then(()  => showToast('Report draft copied to clipboard.'))
+    .catch(()  => showToast('Copy unavailable — select draft text manually','error'));
+}
+
+function pocScheduleFollowUp() { showToast('Follow-up reminder scheduled.'); }
 
 /* ══ EVIDENCE BUTTONS ══════════════════════════════════════════════════════ */
 function queueUpdate()       { showToast('Queue update submitted \u2014 ticket #'+Math.floor(Math.random()*90000+10000)); }
@@ -1179,6 +1373,7 @@ function resetAll() {
   document.getElementById('resultSection').style.display = 'none';
   document.getElementById('enrichExtras').style.display = 'none';
   document.getElementById('publicDataBlock').style.display = 'none';
+  document.getElementById('pocSection').style.display = 'none';
   updateSignalStatus();
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
@@ -1254,6 +1449,7 @@ async function enrichWorkOrder(woStr, btn) {
     document.getElementById('resultSection').style.display = 'none';
     document.getElementById('enrichExtras').style.display = 'none';
     document.getElementById('publicDataBlock').style.display = 'none';
+    document.getElementById('pocSection').style.display = 'none';
     document.getElementById('resultEyebrow').textContent = 'Work Order Enrichment · ' + wo.title;
     buildResult(data);
     showToast('Work order enriched with AI');
